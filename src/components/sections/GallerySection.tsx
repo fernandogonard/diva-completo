@@ -19,11 +19,11 @@ function GallerySection() {
     }
   }, [selectedImage]);
 
-  // Handle keyboard navigation in modal
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedImage) return;
-      
+
       if (e.key === 'Escape') {
         setSelectedImage(null);
       } else if (e.key === 'ArrowLeft') {
@@ -70,8 +70,8 @@ function GallerySection() {
   return (
     <section id="gallery" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -89,43 +89,49 @@ function GallerySection() {
         </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto" role="region" aria-label="Galería de fotos del hotel">
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto"
+          role="region"
+          aria-label="Galería de fotos del hotel"
+        >
           {galleryImages.map((image, index) => {
-            const delay = prefersReducedMotion ? 0 : index * 0.1;
+            const delay = prefersReducedMotion ? 0 : index * 0.08;
+
             return (
-            <motion.button
-              key={image.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay }}
-              viewport={{ once: true }}
-              className="relative overflow-hidden rounded-xl cursor-pointer group h-48 border-0 p-0"
-              onClick={() => handleImageClick(image, index)}
-              aria-label={`Ver ${image.alt} en pantalla completa`}
-              aria-pressed={selectedImage?.id === image.id}
-            >
-              <LazyImage
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full group-hover:scale-110 transition-transform duration-500"
-                priority={index < 4}
-              />
-              
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center" aria-hidden="true">
-                <motion.div
-                  className="text-white text-center"
-                  whileHover={{ scale: 1.1 }}
+              <motion.button
+                key={image.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay }}
+                viewport={{ once: true }}
+                className="relative overflow-hidden rounded-xl cursor-pointer group h-48 border-0 p-0"
+                onClick={() => handleImageClick(image, index)}
+                aria-label={`Ver ${image.alt} en pantalla completa`}
+              >
+                <LazyImage
+                  src={image.src}
+                  alt={image.alt}
+                  width={400}
+                  height={300}
+                  className="w-full h-full group-hover:scale-110 transition-transform duration-500"
+                  priority={index === 0}
+                />
+
+                {/* Hover overlay */}
+                <div
+                  className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  aria-hidden="true"
                 >
-                  <p className="font-semibold">{image.alt}</p>
-                </motion.div>
-              </div>
-            </motion.button>
+                  <p className="text-white font-semibold text-center px-2">
+                    {image.alt}
+                  </p>
+                </div>
+              </motion.button>
             );
           })}
         </div>
 
-        {/* Modal Lightbox */}
+        {/* Modal */}
         <AnimatePresence>
           {selectedImage && (
             <motion.div
@@ -140,16 +146,18 @@ function GallerySection() {
               aria-modal="true"
               aria-label="Visor de galería"
             >
-              <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-                
-                {/* Close Button */}
+              <div
+                className="relative max-w-4xl w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close */}
                 <motion.button
                   ref={closeButtonRef}
-                  className="absolute -top-10 right-0 text-white hover:text-primary-400 transition-colors"
+                  className="absolute -top-10 right-0 text-white hover:text-primary-400"
                   onClick={() => setSelectedImage(null)}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  aria-label="Cerrar galería (ESC)"
+                  aria-label="Cerrar galería"
                 >
                   <X className="w-8 h-8" />
                 </motion.button>
@@ -157,49 +165,53 @@ function GallerySection() {
                 {/* Image */}
                 <motion.div
                   key={selectedImage.id}
-                  initial={{ scale: 0.8, opacity: 0 }}
+                  initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
                   transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
-                  className="w-full"
                 >
                   <LazyImage
                     src={selectedImage.src}
                     alt={selectedImage.alt}
                     title={selectedImage.alt}
+                    width={1200}
+                    height={800}
                     className="w-full rounded-lg"
-                    priority={true}
+                    priority
                   />
                 </motion.div>
 
-                {/* Navigation Buttons */}
+                {/* Navigation */}
                 <motion.button
                   onClick={handlePrevious}
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-16 text-white hover:text-primary-400 transition-colors"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 text-white hover:text-primary-400"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
-                  aria-label="Imagen anterior (Flecha izquierda)"
+                  aria-label="Imagen anterior"
                 >
-                  <ChevronLeft className="w-10 h-10" aria-hidden="true" />
+                  <ChevronLeft className="w-10 h-10" />
                 </motion.button>
 
                 <motion.button
                   onClick={handleNext}
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-16 text-white hover:text-primary-400 transition-colors"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 text-white hover:text-primary-400"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
-                  aria-label="Imagen siguiente (Flecha derecha)"
+                  aria-label="Imagen siguiente"
                 >
-                  <ChevronRight className="w-10 h-10" aria-hidden="true" />
+                  <ChevronRight className="w-10 h-10" />
                 </motion.button>
 
-                {/* Image Counter */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm" aria-live="polite">
+                {/* Counter */}
+                <div
+                  className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm"
+                  aria-live="polite"
+                >
                   {currentIndex + 1} / {galleryImages.length}
                 </div>
 
-                {/* Image Title */}
-                <div className="absolute -bottom-10 left-0 right-0 text-center text-white mt-4">
+                {/* Caption */}
+                <div className="absolute -bottom-10 left-0 right-0 text-center text-white">
                   <p className="font-semibold">{selectedImage.alt}</p>
                 </div>
               </div>

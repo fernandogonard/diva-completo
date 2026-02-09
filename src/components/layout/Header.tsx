@@ -13,21 +13,20 @@ function Header() {
   const scroll = useSmoothScroll();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = useCallback((href: string, path: string) => {
-    setIsOpen(false);
-    // Si estamos en la misma ruta, hacer scroll
-    if (location.pathname === path && href.startsWith('#')) {
-      scroll(href);
-    }
-  }, [scroll, location.pathname]);
+  const handleNavClick = useCallback(
+    (href: string, path: string) => {
+      setIsOpen(false);
+      if (location.pathname === path && href.startsWith('#')) {
+        scroll(href);
+      }
+    },
+    [scroll, location.pathname]
+  );
 
   return (
     <motion.header
@@ -35,15 +34,15 @@ function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg' 
-          : 'bg-transparent'
+        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
-      role="banner"
     >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Navegación principal">
+      <nav
+        className="container mx-auto px-4 sm:px-6 lg:px-8"
+        aria-label="Navegación principal"
+      >
         <div className="flex justify-between items-center h-16 lg:h-20">
-          {/* Logo Section */}
+          {/* Logo */}
           <motion.a
             href="#home"
             whileHover={{ scale: 1.05 }}
@@ -53,19 +52,20 @@ function Header() {
               scroll('#home');
             }}
           >
-            <img 
-              src="/images/logo.png" 
+            <img
+              src="/images/logo.png"
               alt="Hotel Diva - Alojamiento en Mar del Plata"
+              width={48}
+              height={48}
               className="h-10 lg:h-12 w-auto object-contain"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = 'none';
-              }}
             />
-            <h1 className={`text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
-              isScrolled ? 'text-primary-600' : 'text-white'
-            }`}>
+            <span
+              className={`text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
+                isScrolled ? 'text-primary-600' : 'text-white'
+              }`}
+            >
               Hotel Diva
-            </h1>
+            </span>
           </motion.a>
 
           {/* Desktop Menu */}
@@ -79,44 +79,43 @@ function Header() {
                   isScrolled ? 'text-secondary-700' : 'text-white'
                 }`}
               >
-                <motion.span
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-block"
-                >
-                  {item.name}
-                </motion.span>
+                {item.name}
               </Link>
             ))}
-            
+
             <motion.a
               href={`tel:${HOTEL_INFO.phone}`}
               className={`flex items-center gap-2 px-4 py-2 rounded-full border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
-                isScrolled 
-                  ? 'border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white' 
+                isScrolled
+                  ? 'border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white'
                   : 'border-white text-white hover:bg-white hover:text-primary-600'
               }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(HOTEL_INFO.phone)}`}
+              aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(
+                HOTEL_INFO.phone
+              )}`}
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
-              <span className="font-medium">{formatPhoneDisplay(HOTEL_INFO.phone)}</span>
+              <span className="font-medium">
+                {formatPhoneDisplay(HOTEL_INFO.phone)}
+              </span>
             </motion.a>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Button */}
           <div className="lg:hidden">
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+              className={`p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 ${
                 isScrolled ? 'text-secondary-700' : 'text-white'
               }`}
-              whileTap={{ scale: 0.95 }}
               aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isOpen}
             >
-              {isOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
+              {isOpen ? (
+                <X className="w-6 h-6" aria-hidden="true" />
+              ) : (
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              )}
             </motion.button>
           </div>
         </div>
@@ -130,7 +129,6 @@ function Header() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="lg:hidden bg-white/95 backdrop-blur-md border-t border-secondary-200"
-              role="navigation"
               aria-label="Menú móvil"
             >
               <div className="py-4 space-y-2">
@@ -139,26 +137,24 @@ function Header() {
                     key={item.name}
                     to={item.path}
                     onClick={() => handleNavClick(item.href, item.path)}
-                    className="block w-full text-left px-4 py-3 text-secondary-700 hover:text-primary-600 hover:bg-primary-50 transition-colors duration-200 focus:outline-none focus:bg-primary-50"
+                    className="block px-4 py-3 text-secondary-700 hover:text-primary-600 hover:bg-primary-50 focus:outline-none focus:bg-primary-50"
                   >
-                    <motion.span
-                      whileTap={{ scale: 0.98 }}
-                      className="inline-block"
-                    >
-                      {item.name}
-                    </motion.span>
+                    {item.name}
                   </Link>
                 ))}
-                
-                <motion.a
+
+                <a
                   href={`tel:${HOTEL_INFO.phone}`}
-                  className="flex items-center gap-2 px-4 py-3 text-primary-600 hover:bg-primary-50 transition-colors duration-200 focus:outline-none focus:bg-primary-50"
-                  whileTap={{ scale: 0.98 }}
-                  aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(HOTEL_INFO.phone)}`}
+                  className="flex items-center gap-2 px-4 py-3 text-primary-600 hover:bg-primary-50"
+                  aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(
+                    HOTEL_INFO.phone
+                  )}`}
                 >
                   <Phone className="w-4 h-4" aria-hidden="true" />
-                  <span className="font-medium">{formatPhoneDisplay(HOTEL_INFO.phone)}</span>
-                </motion.a>
+                  <span className="font-medium">
+                    {formatPhoneDisplay(HOTEL_INFO.phone)}
+                  </span>
+                </a>
               </div>
             </motion.div>
           )}
@@ -166,6 +162,6 @@ function Header() {
       </nav>
     </motion.header>
   );
-};
+}
 
 export default Header;
