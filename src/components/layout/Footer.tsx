@@ -73,8 +73,8 @@ const Footer: React.FC = () => {
             <div className="space-y-2">
               {[
                 { name: 'Habitaciones', id: 'rooms' },
-                { name: 'Servicios', id: 'services' },
                 { name: 'Galería', id: 'gallery' },
+                { name: 'Grupos', id: 'groups' },
                 { name: 'Contacto', id: 'contact' }
               ].map((link) => (
                 <button
@@ -92,6 +92,36 @@ const Footer: React.FC = () => {
             </div>
           </motion.div>
 
+          {/* Campaigns */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-lg font-semibold mb-4">Campañas</h3>
+            <div className="space-y-2">
+              <a
+                href="https://hotel-diva-semana-santa.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
+                aria-label="Paquete Semana Santa 2026"
+              >
+                Semana Santa 2026
+              </a>
+              <a
+                href="https://cosapro-hoteldiva.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
+                aria-label="Evento Cosapro"
+              >
+                Evento Cosapro
+              </a>
+            </div>
+          </motion.div>
+
           {/* Social Media */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -102,7 +132,9 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
             <div className="flex gap-4">
               <motion.a
-                href="#"
+                href="https://www.instagram.com/hoteldivamdp/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram de Hotel Diva"
                 className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-500 hover:text-white transition-colors"
                 whileHover={{ scale: 1.1 }}
@@ -112,7 +144,9 @@ const Footer: React.FC = () => {
               </motion.a>
 
               <motion.a
-                href="#"
+                href="https://www.facebook.com/hoteldivamdp"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook de Hotel Diva"
                 className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-500 hover:text-white transition-colors"
                 whileHover={{ scale: 1.1 }}
