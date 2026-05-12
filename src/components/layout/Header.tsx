@@ -12,11 +12,17 @@ function Header() {
   const location = useLocation();
   const scroll = useSmoothScroll();
 
+  // En páginas internas el header siempre muestra fondo blanco
+  const isHomePage = location.pathname === '/';
+  const showSolid = !isHomePage || isScrolled;
+
   useEffect(() => {
+    // Resetear scroll state al cambiar de página
+    setIsScrolled(window.scrollY > 50);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const handleNavClick = useCallback(
     (href: string, path: string) => {
@@ -34,7 +40,7 @@ function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+        showSolid ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
     >
       <nav
@@ -61,7 +67,7 @@ function Header() {
             />
             <span
               className={`text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-primary-600' : 'text-white'
+                showSolid ? 'text-primary-600' : 'text-white'
               }`}
             >
               Hotel Diva
@@ -77,12 +83,12 @@ function Header() {
                 to={item.path}
                 onClick={() => handleNavClick(item.href, item.path)}
                 className={`relative group px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                  isScrolled
+                  showSolid
                     ? 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
                 } ${
                   location.pathname === item.path
-                    ? isScrolled
+                    ? showSolid
                       ? 'text-primary-600 bg-primary-50'
                       : 'text-white bg-white/10'
                     : ''
@@ -92,20 +98,20 @@ function Header() {
                 {/* underline indicator */}
                 <span
                   className={`absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full transition-all duration-200 origin-left scale-x-0 group-hover:scale-x-100 ${
-                    isScrolled ? 'bg-primary-500' : 'bg-white'
+                    showSolid ? 'bg-primary-500' : 'bg-white'
                   } ${location.pathname === item.path ? 'scale-x-100' : ''}`}
                 />
               </Link>
             ))}
 
             {/* Separator */}
-            <div className={`mx-2 h-6 w-px flex-shrink-0 ${isScrolled ? 'bg-secondary-200' : 'bg-white/20'}`} />
+            <div className={`mx-2 h-6 w-px flex-shrink-0 ${showSolid ? 'bg-secondary-200' : 'bg-white/20'}`} />
 
             {/* Campaigns — pills pequeñas */}
             {CAMPAIGNS.map((campaign) => {
               const isExternal = campaign.url.startsWith('http');
               const pillClass = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap ${
-                isScrolled
+                showSolid
                   ? 'bg-primary-100 text-primary-700 hover:bg-primary-600 hover:text-white'
                   : 'bg-white/15 text-white hover:bg-white/30'
               }`;
@@ -134,7 +140,7 @@ function Header() {
             })}
 
             {/* Separator */}
-            <div className={`mx-2 h-6 w-px flex-shrink-0 ${isScrolled ? 'bg-secondary-200' : 'bg-white/20'}`} />
+            <div className={`mx-2 h-6 w-px flex-shrink-0 ${showSolid ? 'bg-secondary-200' : 'bg-white/20'}`} />
 
             {/* Teléfono */}
             <motion.a
@@ -142,7 +148,7 @@ function Header() {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 whitespace-nowrap ${
-                isScrolled
+                showSolid
                   ? 'border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white'
                   : 'border-white/80 text-white hover:bg-white hover:text-primary-600'
               }`}
@@ -158,7 +164,7 @@ function Header() {
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
               className={`p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-                isScrolled ? 'text-secondary-700' : 'text-white'
+                showSolid ? 'text-secondary-700' : 'text-white'
               }`}
               aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isOpen}
