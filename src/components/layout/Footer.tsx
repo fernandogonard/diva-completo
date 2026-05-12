@@ -119,6 +119,15 @@ const Footer: React.FC = () => {
               >
                 Evento Cosapro
               </a>
+              <a
+                href="https://hoteldiva-filapi2026.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
+                aria-label="FILAPI 2026 - Congreso Latinoamericano de Apicultura"
+              >
+                🐝 FILAPI 2026
+              </a>
             </div>
           </motion.div>
 

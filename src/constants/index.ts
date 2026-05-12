@@ -158,6 +158,7 @@ export const NAVIGATION_ITEMS = [
   { name: 'Habitaciones', href: '#rooms', path: '/habitaciones' },
   { name: 'Galería', href: '#gallery', path: '/galeria' },
   { name: 'Grupos', href: '#groups', path: '/grupos' },
+  { name: 'Eventos', href: '/eventos', path: '/eventos' },
   { name: 'Contacto', href: '#contact', path: '/contacto' },
 ] as const;
 
@@ -172,5 +173,10 @@ export const CAMPAIGNS = [
     name: 'Evento COSAPRO 2026',
     url: 'https://cosapro-hoteldiva.netlify.app/',
     description: 'Alojamiento para asistentes del Congreso Provincial de Salud',
+  },
+  {
+    name: 'FILAPI 2026',
+    url: 'https://hoteldiva-filapi2026.netlify.app/',
+    description: 'Congreso Latinoamericano de Apicultura · 31 ago – 6 sep 2026',
   },
 ] as const;
