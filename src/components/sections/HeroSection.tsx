@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Heart, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { ReservationCTA } from '../whatsapp';
 import { useHeadMetadata, useReducedMotion } from '../../hooks';
 
@@ -9,7 +9,8 @@ function HeroSection() {
   useHeadMetadata({
     title: 'Hotel Diva - Alojamiento Premium en Mar del Plata',
     description:
-      'Descubre la perfecta combinación de elegancia y comodidad en Hotel Diva, Mar del Plata. Habitaciones matrimonial, twin, triple y cuádruple.',
+      'Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes.',
+
     ogImage: '/images/hero.jpg',
     keywords: ['hotel mar del plata', 'alojamiento', 'hospedaje'],
   });
@@ -48,12 +49,10 @@ function HeroSection() {
           transition={{ duration }}
           className="mb-6"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Heart className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-            <span className="text-lg font-medium text-white/90 italic">
+          <div className="flex items-center justify-center mb-4 px-2">
+            <span className="text-xs sm:text-sm font-medium tracking-wide text-primary-300 border border-primary-400/40 px-4 py-1.5 rounded-full backdrop-blur-sm text-center leading-snug">
               Nuestras únicas estrellas son nuestros huéspedes
             </span>
-            <Heart className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
@@ -75,7 +74,7 @@ function HeroSection() {
           transition={{ duration, delay }}
           className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed"
         >
-          Descubre la perfecta combinación de elegancia y comodidad en el corazón de Mar del Plata
+          Descubre la perfecta combinación de amabilidad y comodidad, a pasos de la Vieja Terminal, en el barrio Güemes
         </motion.p>
 
         <motion.div
