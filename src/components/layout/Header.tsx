@@ -87,22 +87,36 @@ function Header() {
             <div className={`h-6 w-px ${isScrolled ? 'bg-secondary-300' : 'bg-white/30'}`}></div>
 
             {/* Campaigns */}
-            {CAMPAIGNS.map((campaign) => (
-              <motion.a
-                key={campaign.name}
-                href={campaign.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 text-sm ${
-                  isScrolled ? 'text-secondary-700' : 'text-white'
-                }`}
-                aria-label={`Ir a ${campaign.name}`}
-                title={campaign.description}
-              >
-                {campaign.name}
-              </motion.a>
-            ))}
+            {CAMPAIGNS.map((campaign) => {
+              const isExternal = campaign.url.startsWith('http');
+              return isExternal ? (
+                <motion.a
+                  key={campaign.name}
+                  href={campaign.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 text-sm ${
+                    isScrolled ? 'text-secondary-700' : 'text-white'
+                  }`}
+                  aria-label={`Ir a ${campaign.name}`}
+                  title={campaign.description}
+                >
+                  {campaign.name}
+                </motion.a>
+              ) : (
+                <Link
+                  key={campaign.name}
+                  to={campaign.url}
+                  className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 text-sm ${
+                    isScrolled ? 'text-secondary-700' : 'text-white'
+                  }`}
+                  title={campaign.description}
+                >
+                  {campaign.name}
+                </Link>
+              );
+            })}
 
             <motion.a
               href={`tel:${HOTEL_INFO.phone}`}
@@ -167,18 +181,30 @@ function Header() {
                 {/* Campaign Links Mobile */}
                 <div className="px-4 py-3 border-t border-secondary-200">
                   <p className="text-xs uppercase text-secondary-500 font-semibold mb-2">Campañas</p>
-                  {CAMPAIGNS.map((campaign) => (
-                    <a
-                      key={campaign.name}
-                      href={campaign.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50"
-                      aria-label={`Ir a ${campaign.name}`}
-                    >
-                      → {campaign.name}
-                    </a>
-                  ))}
+                  {CAMPAIGNS.map((campaign) => {
+                    const isExternal = campaign.url.startsWith('http');
+                    return isExternal ? (
+                      <a
+                        key={campaign.name}
+                        href={campaign.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50"
+                        aria-label={`Ir a ${campaign.name}`}
+                      >
+                        → {campaign.name}
+                      </a>
+                    ) : (
+                      <Link
+                        key={campaign.name}
+                        to={campaign.url}
+                        onClick={() => setIsOpen(false)}
+                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50"
+                      >
+                        → {campaign.name}
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 <a

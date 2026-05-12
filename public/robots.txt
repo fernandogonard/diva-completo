@@ -15,5 +15,5 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-Sitemap: https://hoteldiva.com.ar/sitemap.xml
-Host: https://hoteldiva.com.ar
+Sitemap: https://diva-hotel-mar-del-plata.netlify.app/sitemap.xml
+Host: https://diva-hotel-mar-del-plata.netlify.app
