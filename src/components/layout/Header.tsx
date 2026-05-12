@@ -69,48 +69,63 @@ function Header() {
           </motion.a>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center gap-1">
+            {/* Nav principal */}
             {NAVIGATION_ITEMS.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 onClick={() => handleNavClick(item.href, item.path)}
-                className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 ${
-                  isScrolled ? 'text-secondary-700' : 'text-white'
+                className={`relative group px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                  isScrolled
+                    ? 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                } ${
+                  location.pathname === item.path
+                    ? isScrolled
+                      ? 'text-primary-600 bg-primary-50'
+                      : 'text-white bg-white/10'
+                    : ''
                 }`}
               >
                 {item.name}
+                {/* underline indicator */}
+                <span
+                  className={`absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full transition-all duration-200 origin-left scale-x-0 group-hover:scale-x-100 ${
+                    isScrolled ? 'bg-primary-500' : 'bg-white'
+                  } ${location.pathname === item.path ? 'scale-x-100' : ''}`}
+                />
               </Link>
             ))}
 
             {/* Separator */}
-            <div className={`h-6 w-px ${isScrolled ? 'bg-secondary-300' : 'bg-white/30'}`}></div>
+            <div className={`mx-2 h-6 w-px flex-shrink-0 ${isScrolled ? 'bg-secondary-200' : 'bg-white/20'}`} />
 
-            {/* Campaigns */}
+            {/* Campaigns — pills pequeñas */}
             {CAMPAIGNS.map((campaign) => {
               const isExternal = campaign.url.startsWith('http');
+              const pillClass = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap ${
+                isScrolled
+                  ? 'bg-primary-100 text-primary-700 hover:bg-primary-600 hover:text-white'
+                  : 'bg-white/15 text-white hover:bg-white/30'
+              }`;
               return isExternal ? (
-                <motion.a
+                <a
                   key={campaign.name}
                   href={campaign.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 text-sm ${
-                    isScrolled ? 'text-secondary-700' : 'text-white'
-                  }`}
+                  className={pillClass}
                   aria-label={`Ir a ${campaign.name}`}
                   title={campaign.description}
                 >
                   {campaign.name}
-                </motion.a>
+                </a>
               ) : (
                 <Link
                   key={campaign.name}
                   to={campaign.url}
-                  className={`font-medium transition-colors duration-300 hover:text-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1 text-sm ${
-                    isScrolled ? 'text-secondary-700' : 'text-white'
-                  }`}
+                  className={pillClass}
                   title={campaign.description}
                 >
                   {campaign.name}
@@ -118,21 +133,23 @@ function Header() {
               );
             })}
 
+            {/* Separator */}
+            <div className={`mx-2 h-6 w-px flex-shrink-0 ${isScrolled ? 'bg-secondary-200' : 'bg-white/20'}`} />
+
+            {/* Teléfono */}
             <motion.a
               href={`tel:${HOTEL_INFO.phone}`}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 whitespace-nowrap ${
                 isScrolled
                   ? 'border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white'
-                  : 'border-white text-white hover:bg-white hover:text-primary-600'
+                  : 'border-white/80 text-white hover:bg-white hover:text-primary-600'
               }`}
-              aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(
-                HOTEL_INFO.phone
-              )}`}
+              aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(HOTEL_INFO.phone)}`}
             >
-              <Phone className="w-4 h-4" aria-hidden="true" />
-              <span className="font-medium">
-                {formatPhoneDisplay(HOTEL_INFO.phone)}
-              </span>
+              <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>{formatPhoneDisplay(HOTEL_INFO.phone)}</span>
             </motion.a>
           </div>
 
