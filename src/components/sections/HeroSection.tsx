@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Star, MapPin } from 'lucide-react';
+import { Heart, MapPin } from 'lucide-react';
 import { ReservationCTA } from '../whatsapp';
 import { useHeadMetadata, useReducedMotion } from '../../hooks';
 
@@ -49,18 +49,11 @@ function HeroSection() {
           className="mb-6"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="flex items-center">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className="w-5 h-5 fill-yellow-400 text-yellow-400"
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
-            <span className="text-lg font-medium text-white">
-              Hotel de Excelencia
+            <Heart className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
+            <span className="text-lg font-medium text-white/90 italic">
+              Nuestras únicas estrellas son nuestros huéspedes
             </span>
+            <Heart className="w-5 h-5 fill-yellow-400 text-yellow-400" aria-hidden="true" />
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
