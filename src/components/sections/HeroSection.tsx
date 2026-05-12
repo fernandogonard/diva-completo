@@ -49,6 +49,16 @@ function HeroSection() {
           transition={{ duration }}
           className="mb-6"
         >
+          {/* Logo solo en móvil, con margen para no solapar el header */}
+          <div className="flex justify-center mb-4 mt-16 sm:mt-0 sm:hidden">
+            <img
+              src="/images/logo.png"
+              alt="Hotel Diva"
+              className="h-20 w-auto object-contain"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
+          </div>
+
           <div className="flex items-center justify-center mb-4 px-2">
             <span className="text-xs sm:text-sm font-medium tracking-wide text-primary-300 border border-primary-400/40 px-4 py-1.5 rounded-full backdrop-blur-sm text-center leading-snug">
               Nuestras únicas estrellas son nuestros huéspedes

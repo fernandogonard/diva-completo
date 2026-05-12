@@ -67,7 +67,7 @@ function Header() {
               style={showSolid ? {} : { filter: 'brightness(0) invert(1)' }}
             />
             <span
-              className={`text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
+              className={`hidden sm:block text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
                 showSolid ? 'text-primary-600' : 'text-white'
               }`}
             >
