@@ -21,6 +21,7 @@ export interface Room {
   amenities: string[];
   description: string;
   image: string;
+  images?: string[];
 }
 
 export interface GalleryImage {

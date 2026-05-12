@@ -62,6 +62,7 @@ export const ROOM_TYPES = {
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito'],
     description: 'Perfecta para parejas, con todas las comodidades que necesitas.',
     image: '/images/rooms/matrimonial-1.jpg',
+    images: ['/images/rooms/matrimonial-1.jpg', '/images/rooms/matrimonial-2.jpg', '/images/rooms/matrimonial-3.jpg'],
   },
   twin: {
     id: 'twin',
@@ -71,24 +72,27 @@ export const ROOM_TYPES = {
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito'],
     description: 'Ideal para amigos o familiares que prefieren camas separadas.',
     image: '/images/rooms/twin-1.jpg',
+    images: ['/images/rooms/twin-1.jpg', '/images/rooms/twin-2.jpg', '/images/rooms/twin-3.jpg'],
   },
   triple: {
     id: 'triple',
     name: 'Habitación Triple',
     capacity: 3,
-    beds: '3 camas de una plaza o 1 cama matrimonial + 1 cama de una plaza',
+    beds: '3 camas de una plaza o 1 matrimonial + 1 de una plaza',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito', 'Mayor espacio'],
     description: 'Perfecta para familias pequeñas o grupos de 3 personas.',
     image: '/images/rooms/triple-1.jpg',
+    images: ['/images/rooms/triple-1.jpg'],
   },
   cuadruple: {
     id: 'cuadruple',
     name: 'Habitación Cuádruple',
     capacity: 4,
-    beds: '1 cama matrimonial + 2 camas de una plaza o 4 camas de una plaza',
+    beds: '1 matrimonial + 2 de una plaza o 4 camas de una plaza',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito', 'Amplio espacio compartido'],
     description: 'Ideal para familias o grupos de 4 personas con máxima comodidad.',
     image: '/images/rooms/cuadruple-1.jpg',
+    images: ['/images/rooms/cuadruple-1.jpg'],
   },
 } as const;
 
