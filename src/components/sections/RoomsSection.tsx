@@ -36,7 +36,7 @@ function RoomsSection() {
             Nuestras Habitaciones
           </h2>
           <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
-            Espacios diseÃ±ados para tu descanso y comodidad
+            Espacios diseñados para tu descanso y comodidad
           </p>
         </motion.div>
 
