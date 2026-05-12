@@ -28,7 +28,7 @@ export function AppRoutes() {
         <Route path="/grupos" element={<GroupsPage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/eventos" element={<EventosPage />} />
-        {/* 404 - Redirect to home */
+        {/* 404 - Redirect to home */}
         <Route path="*" element={<HomePage />} />
       </Routes>
     </Suspense>
