@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Bed, Wifi, Tv, Car, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { Users, Bed, Wifi, Tv, Shield, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { ROOM_TYPES, WHATSAPP_URLS } from '../../constants';
 import { openWhatsApp } from '../../utils';
 import { LazyImage } from '../common';
@@ -183,7 +183,7 @@ function RoomsSection() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: Wifi, text: 'Wi-Fi Gratuito' },
-                { icon: Car, text: 'Estacionamiento' },
+                { icon: Shield, text: 'Caja de Seguridad' },
                 { icon: Bed, text: 'Ropa de Cama' },
                 { icon: Users, text: 'Limpieza Diaria' },
               ].map((service, i) => (
