@@ -63,7 +63,8 @@ function Header() {
               alt="Hotel Diva - Alojamiento en Mar del Plata"
               width={48}
               height={48}
-              className="h-10 lg:h-12 w-auto object-contain"
+              className="h-10 lg:h-12 w-auto object-contain transition-all duration-300"
+              style={showSolid ? {} : { filter: 'brightness(0) invert(1)' }}
             />
             <span
               className={`text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
