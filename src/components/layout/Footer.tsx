@@ -177,7 +177,16 @@ const Footer: React.FC = () => {
         >
           <p>&copy; {currentYear} Hotel Diva. Todos los derechos reservados.</p>
           <p className="mt-2 text-sm">
-            Desarrollado con ❤️ para brindar la mejor experiencia
+            Hecho con ❤️ por{' '}
+            <a
+              href="https://mgproduccionesweb.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary-400 transition-colors underline underline-offset-2"
+              aria-label="MG Soluciones Web"
+            >
+              MG Soluciones Web
+            </a>
           </p>
         </motion.div>
       </div>
