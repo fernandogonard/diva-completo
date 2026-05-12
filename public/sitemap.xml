@@ -5,7 +5,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://diva-hotel-mar-del-plata.netlify.app/</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,7 +17,7 @@
   <!-- Habitaciones -->
   <url>
     <loc>https://diva-hotel-mar-del-plata.netlify.app/habitaciones</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -45,7 +45,7 @@
   <!-- Galería -->
   <url>
     <loc>https://diva-hotel-mar-del-plata.netlify.app/galeria</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -85,7 +85,7 @@
   <!-- Grupos y Contingentes -->
   <url>
     <loc>https://diva-hotel-mar-del-plata.netlify.app/grupos</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -93,31 +93,20 @@
   <!-- Contacto -->
   <url>
     <loc>https://diva-hotel-mar-del-plata.netlify.app/contacto</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
-</urlset>
-    <lastmod>2026-02-24</lastmod>
+  <!-- Eventos y Campañas -->
+  <url>
+    <loc>https://diva-hotel-mar-del-plata.netlify.app/eventos</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://hoteldiva.com.ar/images/hero.jpg</image:loc>
-      <image:title>Hotel Diva Mar del Plata - Vista principal</image:title>
-    </image:image>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Habitaciones -->
-  <url>
-    <loc>https://hoteldiva.com.ar/habitaciones</loc>
-    <lastmod>2026-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://hoteldiva.com.ar/images/rooms/matrimonial-1.jpg</image:loc>
-      <image:title>Habitación Matrimonial - Hotel Diva Mar del Plata</image:title>
-    </image:image>
+</urlset>
     <image:image>
       <image:loc>https://hoteldiva.com.ar/images/rooms/matrimonial-2.jpg</image:loc>
       <image:title>Habitación Matrimonial vista 2 - Hotel Diva</image:title>
@@ -139,7 +128,7 @@
   <!-- Galería -->
   <url>
     <loc>https://hoteldiva.com.ar/galeria</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -179,7 +168,7 @@
   <!-- Grupos y Contingentes -->
   <url>
     <loc>https://hoteldiva.com.ar/grupos</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -187,7 +176,7 @@
   <!-- Contacto -->
   <url>
     <loc>https://hoteldiva.com.ar/contacto</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
