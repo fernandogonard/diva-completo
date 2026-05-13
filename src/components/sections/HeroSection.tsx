@@ -55,6 +55,8 @@ function HeroSection() {
               src="/images/logo.png"
               alt="Hotel Diva"
               className="h-32 w-auto object-contain"
+              width={128}
+              height={128}
               style={{ filter: 'brightness(0) invert(1)' }}
             />
           </div>
