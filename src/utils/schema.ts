@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Schema.org JSON-LD Utilities
  * Implementación de structured data para SEO
  */
@@ -87,7 +87,7 @@ export function createOrganizationSchema(): SchemaOrganization {
       "https://www.facebook.com/p/Hotel-Diva-MDP-100076003113878/",
       "https://www.instagram.com/hoteldivamdp/",
     ],
-    logo: "https://diva-hotel-mar-del-plata.netlify.app/images/logo.png",
+    logo: "https://diva-hotel-mar-del-plata.netlify.app/images/logo.webp",
   };
 }
 
@@ -101,7 +101,7 @@ export function createLocalBusinessSchema(): SchemaLocalBusiness {
     name: "Hotel Diva",
     description:
       "Hotel en Mar del Plata con habitaciones para turismo, grupos deportivos, contingentes y eventos. Cocina propia, desayuno buffet y atención personalizada.",
-    image: "https://diva-hotel-mar-del-plata.netlify.app/images/hero.jpg",
+    image: "https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp",
     telephone: "+54 9 2235 03-3585",
     priceRange: "$$",
     address: {

@@ -1,4 +1,4 @@
-import { useHeadMetadata } from '../hooks';
+﻿import { useHeadMetadata } from '../hooks';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
 import { WHATSAPP_URLS } from '../constants';
@@ -8,7 +8,7 @@ function ContactPage() {
     title: 'Contacto | Hotel Diva',
     description: 'Ponte en contacto con Hotel Diva. WhatsApp, teléfono, correo y ubicación en Mar del Plata.',
     keywords: ['contacto', 'teléfono', 'email', 'ubicación'],
-    ogImage: '/images/contact-og.jpg',
+    ogImage: '/images/contact-og.webp',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

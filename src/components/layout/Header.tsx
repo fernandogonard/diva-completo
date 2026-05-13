@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
@@ -59,7 +59,7 @@ function Header() {
             }}
           >
             <img
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="Hotel Diva - Alojamiento en Mar del Plata"
               width={48}
               height={48}

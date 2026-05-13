@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+﻿import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { LazyImage } from '../common';
@@ -40,14 +40,14 @@ function GallerySection() {
   }, [selectedImage, currentIndex]);
 
   const galleryImages: GalleryImage[] = [
-    { id: '1', src: '/images/gallery/gallery-1.jpg', alt: 'Recepción y lobby del Hotel Diva - Primera impresión', category: 'General' },
-    { id: '2', src: '/images/gallery/gallery-2.jpg', alt: 'Área común y sala de estar - Espacio de descanso', category: 'General' },
-    { id: '3', src: '/images/gallery/gallery-3.jpg', alt: 'Comedor y desayunador - Servicio gastronómico', category: 'General' },
-    { id: '4', src: '/images/gallery/gallery-4.jpg', alt: 'Terraza exterior - Vista y esparcimiento', category: 'General' },
-    { id: '5', src: '/images/gallery/gallery-5.jpg', alt: 'Escaleras y pasillos - Acceso a habitaciones', category: 'General' },
-    { id: '6', src: '/images/gallery/gallery-6.jpg', alt: 'Detalles decorativos - Diseño interior', category: 'General' },
-    { id: '7', src: '/images/gallery/gallery-7.jpg', alt: 'Hotel iluminado de noche - Ambiente nocturno', category: 'General' },
-    { id: '8', src: '/images/gallery/gallery-8.jpg', alt: 'Entrada principal del Hotel Diva - Fachada', category: 'General' },
+    { id: '1', src: '/images/gallery/gallery-1.webp', alt: 'Recepción y lobby del Hotel Diva - Primera impresión', category: 'General' },
+    { id: '2', src: '/images/gallery/gallery-2.webp', alt: 'Área común y sala de estar - Espacio de descanso', category: 'General' },
+    { id: '3', src: '/images/gallery/gallery-3.webp', alt: 'Comedor y desayunador - Servicio gastronómico', category: 'General' },
+    { id: '4', src: '/images/gallery/gallery-4.webp', alt: 'Terraza exterior - Vista y esparcimiento', category: 'General' },
+    { id: '5', src: '/images/gallery/gallery-5.webp', alt: 'Escaleras y pasillos - Acceso a habitaciones', category: 'General' },
+    { id: '6', src: '/images/gallery/gallery-6.webp', alt: 'Detalles decorativos - Diseño interior', category: 'General' },
+    { id: '7', src: '/images/gallery/gallery-7.webp', alt: 'Hotel iluminado de noche - Ambiente nocturno', category: 'General' },
+    { id: '8', src: '/images/gallery/gallery-8.webp', alt: 'Entrada principal del Hotel Diva - Fachada', category: 'General' },
   ];
 
   const handleImageClick = (image: GalleryImage, index: number) => {

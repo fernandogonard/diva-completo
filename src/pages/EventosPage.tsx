@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { ExternalLink, Calendar, MapPin } from 'lucide-react';
 import { useHeadMetadata } from '../hooks';
 
@@ -56,7 +56,7 @@ function EventosPage() {
     description:
       'Paquetes y eventos especiales de Hotel Diva en Mar del Plata: FILAPI 2026, COSAPRO y Semana Santa. Reservá tu lugar.',
     keywords: ['eventos', 'campañas', 'FILAPI 2026', 'COSAPRO', 'Semana Santa', 'paquetes hotel'],
-    ogImage: '/images/hero.jpg',
+    ogImage: '/images/hero.webp',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',

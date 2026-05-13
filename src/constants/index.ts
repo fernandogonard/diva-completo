@@ -1,4 +1,4 @@
-// Información del Hotel
+﻿// Información del Hotel
 export const HOTEL_INFO = {
   name: 'Hotel Diva',
   phone: '+54 9 223 503-3585',
@@ -61,8 +61,8 @@ export const ROOM_TYPES = {
     beds: 'Cama matrimonial',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito'],
     description: 'Perfecta para parejas, con todas las comodidades que necesitas.',
-    image: '/images/rooms/matrimonial-1.jpg',
-    images: ['/images/rooms/matrimonial-1.jpg', '/images/rooms/matrimonial-2.jpg', '/images/rooms/matrimonial-3.jpg'],
+    image: '/images/rooms/matrimonial-1.webp',
+    images: ['/images/rooms/matrimonial-1.webp', '/images/rooms/matrimonial-2.webp', '/images/rooms/matrimonial-3.webp'],
   },
   twin: {
     id: 'twin',
@@ -71,8 +71,8 @@ export const ROOM_TYPES = {
     beds: '2 camas de una plaza',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito'],
     description: 'Ideal para amigos o familiares que prefieren camas separadas.',
-    image: '/images/rooms/twin-1.jpg',
-    images: ['/images/rooms/twin-1.jpg', '/images/rooms/twin-2.jpg', '/images/rooms/twin-3.jpg'],
+    image: '/images/rooms/twin-1.webp',
+    images: ['/images/rooms/twin-1.webp', '/images/rooms/twin-2.webp', '/images/rooms/twin-3.webp'],
   },
   triple: {
     id: 'triple',
@@ -81,8 +81,8 @@ export const ROOM_TYPES = {
     beds: '3 camas de una plaza o 1 matrimonial + 1 de una plaza',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito', 'Mayor espacio'],
     description: 'Perfecta para familias pequeñas o grupos de 3 personas.',
-    image: '/images/rooms/triple-1.jpg',
-    images: ['/images/rooms/triple-1.jpg'],
+    image: '/images/rooms/triple-1.webp',
+    images: ['/images/rooms/triple-1.webp'],
   },
   cuadruple: {
     id: 'cuadruple',
@@ -91,8 +91,8 @@ export const ROOM_TYPES = {
     beds: '1 matrimonial + 2 de una plaza o 4 camas de una plaza',
     amenities: ['Baño completo', 'Espacio de escritorio', 'TV LED', 'Wi-Fi gratuito', 'Amplio espacio compartido'],
     description: 'Ideal para familias o grupos de 4 personas con máxima comodidad.',
-    image: '/images/rooms/cuadruple-1.jpg',
-    images: ['/images/rooms/cuadruple-1.jpg'],
+    image: '/images/rooms/cuadruple-1.webp',
+    images: ['/images/rooms/cuadruple-1.webp'],
   },
 } as const;
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import type { PageMetadata } from '../types';
 
 /**
@@ -9,7 +9,7 @@ import type { PageMetadata } from '../types';
  * useHeadMetadata({
  *   title: 'Habitaciones | Hotel Diva',
  *   description: 'Descubre nuestras habitaciones...',
- *   ogImage: '/images/rooms.jpg',
+ *   ogImage: '/images/rooms.webp',
  *   schema: { "@type": "Room", ... }
  * })
  */

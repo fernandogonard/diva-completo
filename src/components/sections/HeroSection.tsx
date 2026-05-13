@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import { ReservationCTA } from '../whatsapp';
 import { useHeadMetadata, useReducedMotion } from '../../hooks';
@@ -11,7 +11,7 @@ function HeroSection() {
     description:
       'Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes.',
 
-    ogImage: '/images/hero.jpg',
+    ogImage: '/images/hero.webp',
     keywords: ['hotel mar del plata', 'alojamiento', 'hospedaje'],
   });
 
@@ -26,7 +26,7 @@ function HeroSection() {
       {/* Background Image (LCP) */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero.jpg"
+          src="/images/hero.webp"
           alt="Hotel Diva Mar del Plata, fachada del hotel"
           width={1920}
           height={1080}
@@ -52,7 +52,7 @@ function HeroSection() {
           {/* Logo solo en móvil, con margen para no solapar el header */}
           <div className="flex justify-center mb-4 mt-14 sm:mt-0 sm:hidden">
             <img
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="Hotel Diva"
               className="h-32 w-auto object-contain"
               width={128}

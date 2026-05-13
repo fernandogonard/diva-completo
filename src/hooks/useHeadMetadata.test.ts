@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+﻿import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { useHeadMetadata } from './useHeadMetadata'
 
@@ -67,7 +67,7 @@ describe('useHeadMetadata', () => {
     const metadata = {
       title: 'Hotel Diva',
       description: 'Descripción del hotel',
-      ogImage: '/images/og-image.jpg',
+      ogImage: '/images/og-image.webp',
     }
 
     // Act
@@ -75,7 +75,7 @@ describe('useHeadMetadata', () => {
 
     // Assert
     const ogImage = document.querySelector('meta[property="og:image"]')
-    expect(ogImage?.getAttribute('content')).toBe('/images/og-image.jpg')
+    expect(ogImage?.getAttribute('content')).toBe('/images/og-image.webp')
   })
 
   it('debería actualizar canonical URL', () => {
