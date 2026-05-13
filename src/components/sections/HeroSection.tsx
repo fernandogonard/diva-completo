@@ -50,11 +50,11 @@ function HeroSection() {
           className="mb-6"
         >
           {/* Logo solo en móvil, con margen para no solapar el header */}
-          <div className="flex justify-center mb-4 mt-16 sm:mt-0 sm:hidden">
+          <div className="flex justify-center mb-4 mt-14 sm:mt-0 sm:hidden">
             <img
               src="/images/logo.png"
               alt="Hotel Diva"
-              className="h-20 w-auto object-contain"
+              className="h-32 w-auto object-contain"
               style={{ filter: 'brightness(0) invert(1)' }}
             />
           </div>
