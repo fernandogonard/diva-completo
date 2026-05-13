@@ -45,7 +45,7 @@ const ReservationCTA: React.FC<ReservationCTAProps> = ({
       </motion.h3>
       
       <motion.p 
-        className="text-primary-100 mb-8 max-w-2xl mx-auto"
+        className="text-white/90 mb-8 max-w-2xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
@@ -59,12 +59,12 @@ const ReservationCTA: React.FC<ReservationCTAProps> = ({
         transition={{ duration: 0.6, delay: 0.6 }}
         className="flex flex-col sm:flex-row gap-4 justify-center items-center"
       >
-        <div className="flex items-center gap-2 text-primary-100">
+        <div className="flex items-center gap-2 text-white/90">
           <Calendar className="w-5 h-5" />
           <span>Disponibilidad inmediata</span>
         </div>
         
-        <div className="flex items-center gap-2 text-primary-100">
+        <div className="flex items-center gap-2 text-white/90">
           <Users className="w-5 h-5" />
           <span>Atención personalizada</span>
         </div>

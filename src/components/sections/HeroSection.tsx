@@ -27,6 +27,8 @@ function HeroSection() {
       <div className="absolute inset-0 z-0">
         <img
           src="/images/hero.webp"
+          srcSet="/images/hero-800.webp 800w, /images/hero.webp 1920w"
+          sizes="100vw"
           alt="Hotel Diva Mar del Plata, fachada del hotel"
           width={1920}
           height={1080}
