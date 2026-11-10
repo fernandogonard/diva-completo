@@ -1,0 +1,12 @@
+# Hotel Diva
+
+> Sitio oficial de Hotel Diva, alojamiento en Mar del Plata, Buenos Aires, Argentina.
+
+## Sitio web
+
+- [Inicio](https://diva-hotel-mar-del-plata.netlify.app/): Información general de Hotel Diva.
+- [Habitaciones](https://diva-hotel-mar-del-plata.netlify.app/habitaciones): Tipos de habitaciones e información para consultar alojamiento.
+- [Galería](https://diva-hotel-mar-del-plata.netlify.app/galeria): Imágenes del hotel.
+- [Grupos](https://diva-hotel-mar-del-plata.netlify.app/grupos): Información para grupos y contingentes.
+- [Eventos y campañas](https://diva-hotel-mar-del-plata.netlify.app/eventos): Preventa Verano 2027 y consulta de interés para COSAPRO 2027.
+- [Contacto](https://diva-hotel-mar-del-plata.netlify.app/contacto): Canales de contacto del hotel.

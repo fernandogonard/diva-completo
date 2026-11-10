@@ -1,0 +1,43 @@
+{
+  "name": "Hotel Diva",
+  "description": "Sitio oficial de Hotel Diva, alojamiento en Mar del Plata, Buenos Aires, Argentina.",
+  "url": "https://diva-hotel-mar-del-plata.netlify.app/",
+  "language": "es-AR",
+  "resources": [
+    {
+      "name": "Inicio",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/",
+      "type": "webpage"
+    },
+    {
+      "name": "Habitaciones",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/habitaciones",
+      "type": "webpage"
+    },
+    {
+      "name": "Galería",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/galeria",
+      "type": "webpage"
+    },
+    {
+      "name": "Grupos",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/grupos",
+      "type": "webpage"
+    },
+    {
+      "name": "Eventos y campañas",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/eventos",
+      "type": "webpage"
+    },
+    {
+      "name": "Contacto",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/contacto",
+      "type": "webpage"
+    },
+    {
+      "name": "Información para modelos de lenguaje",
+      "url": "https://diva-hotel-mar-del-plata.netlify.app/llms.txt",
+      "type": "text/markdown"
+    }
+  ]
+}
