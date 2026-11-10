@@ -8,7 +8,8 @@ function ContactPage() {
     title: 'Contacto | Hotel Diva',
     description: 'Ponte en contacto con Hotel Diva. WhatsApp, teléfono, correo y ubicación en Mar del Plata.',
     keywords: ['contacto', 'teléfono', 'email', 'ubicación'],
-    ogImage: '/images/contact-og.webp',
+    ogImage: '/images/hero.webp',
+    canonical: '/contacto',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -18,8 +19,8 @@ function ContactPage() {
   });
 
   return (
-    <main className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <main id="main-content" tabIndex={-1} className="py-20 bg-gray-50">
+      <div id="contact" className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -44,13 +45,13 @@ function ContactPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow"
+            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2"
           >
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageCircle className="w-8 h-8 text-green-600" aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-bold text-secondary-800 mb-2">WhatsApp</h3>
-            <p className="text-green-600 font-semibold">+54 9 223 503-3585</p>
+            <h2 className="text-xl font-bold text-secondary-800 mb-2">WhatsApp</h2>
+            <p className="font-semibold text-green-700">+54 9 223 503-3585</p>
             <p className="text-gray-600 text-sm mt-2">Disponible 24/7</p>
           </motion.a>
 
@@ -60,12 +61,12 @@ function ContactPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow"
+            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2"
           >
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="w-8 h-8 text-blue-600" aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-bold text-secondary-800 mb-2">Email</h3>
+            <h2 className="text-xl font-bold text-secondary-800 mb-2">Email</h2>
             <p className="text-blue-600 font-semibold">matias@hoteldiva.com.ar</p>
             <p className="text-gray-600 text-sm mt-2">Respuesta en 24 horas</p>
           </motion.a>
@@ -76,12 +77,12 @@ function ContactPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow"
+            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2"
           >
             <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Phone className="w-8 h-8 text-purple-600" aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-bold text-secondary-800 mb-2">Teléfono</h3>
+            <h2 className="text-xl font-bold text-secondary-800 mb-2">Teléfono</h2>
             <p className="text-purple-600 font-semibold">+54 223 503-3585</p>
             <p className="text-gray-600 text-sm mt-2">Lunes a Viernes 9-18hs</p>
           </motion.a>
@@ -94,12 +95,12 @@ function ContactPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.05 }}
-            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow"
+            className="bg-white rounded-lg shadow-lg p-8 text-center hover:shadow-xl transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2"
           >
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <MapPin className="w-8 h-8 text-red-600" aria-hidden="true" />
             </div>
-            <h3 className="text-xl font-bold text-secondary-800 mb-2">Ubicación</h3>
+            <h2 className="text-xl font-bold text-secondary-800 mb-2">Ubicación</h2>
             <p className="text-red-600 font-semibold">Calle Garay 1630</p>
             <p className="text-gray-600 text-sm mt-2">Mar del Plata, Argentina</p>
           </motion.a>
@@ -115,7 +116,7 @@ function ContactPage() {
             <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
               <Clock className="w-6 h-6 text-primary-600" aria-hidden="true" />
             </div>
-            <h3 className="text-2xl font-bold text-secondary-800">Horarios de Atención</h3>
+            <h2 className="text-2xl font-bold text-secondary-800">Horarios de Atención</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

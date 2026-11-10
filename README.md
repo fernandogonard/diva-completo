@@ -1,16 +1,10 @@
-# 🏨 Hotel Diva 2026
+# Hotel Diva 2026
 
-> Sitio web moderno y optimizado para Hotel Diva en Mar del Plata, Argentina
-
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com)
-[![Tests](https://img.shields.io/badge/tests-36%2F36%20passing-brightgreen)](https://github.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/xxxxx/deploy-status)](https://app.netlify.com/sites/hotel-diva/deploys)
+Sitio web de Hotel Diva, en Mar del Plata, desarrollado con React, TypeScript y Vite.
 
 ## 📋 Descripción
 
-Hotel Diva 2026 es una aplicación web de última generación desarrollada con React, TypeScript y Vite. Presenta un sitio profesional para Hotel Diva con optimizaciones de performance, SEO y accesibilidad de clase mundial.
+El sitio presenta habitaciones, servicios para grupos, eventos y datos de contacto. Las consultas y reservas se derivan a WhatsApp.
 
 **Ubicación:** Mar del Plata, Argentina  
 **Dirección:** Calle Garay 1630  
@@ -25,31 +19,24 @@ Hotel Diva 2026 es una aplicación web de última generación desarrollada con R
 - **Diseño Responsive:** Totalmente adaptable a dispositivos móviles, tablets y desktop
 - **Animaciones Fluidas:** Transiciones suaves con Framer Motion
 - **Navegación Intuitiva:** React Router v7 con lazy loading
-- **Dark/Light Mode Ready:** Soporte para temas oscuros/claros
 
 ### ⚡ Performance
-- **Core Web Vitals Monitoreados:** LCP, INP, CLS, FCP, TTFB
-- **Code Splitting:** Lazy loading de rutas y componentes
-- **Bundle Optimizado:** 109.71 kB gzipped
-- **Tiempo de Compilación:** 5.7 segundos
+- **Code Splitting:** Carga diferida de rutas
+- **Imágenes:** WebP y dimensiones declaradas para reducir transferencias y saltos de layout
+- **Web Vitals:** Medición en modo desarrollo; no se envían a un servicio de analítica
 
-### 🔍 SEO Completo
-- **Schema.org JSON-LD:** Organization, Hotel, Breadcrumb
-- **Meta Tags Optimizados:** Title, Description, Open Graph
-- **robots.txt y sitemap.xml:** Configurados y validados
-- **Auditoría SEO:** Score 100/100
+### 🔍 SEO
+- Metadatos canónicos, Open Graph y Twitter actualizados al navegar entre rutas
+- Schema.org `Hotel` con datos del proyecto; coordenadas, precios y valoraciones no se publican sin verificar
+- `robots.txt` y `sitemap.xml` para el dominio Netlify configurado
 
 ### 🏗️ Arquitectura
-- **TypeScript Strict Mode:** Tipado completo y seguro
-- **4 Custom Hooks:** useHeadMetadata, useScrollEffects, useMediaQuery, useAsync
-- **Error Boundary:** Manejo robusto de errores
-- **6 Componentes Refactorizados:** Reutilizables y testables
+- TypeScript en modo estricto
+- Layout compartido, rutas lazy-loaded, componentes reutilizables y Error Boundary
+- Página 404 para rutas inexistentes
 
 ### 🧪 Testing
-- **36 Tests Automatizados:** 100% passing
-- **Vitest + React Testing Library:** Framework moderno
-- **jsdom Environment:** Simulación de DOM completa
-- **Coverage Completo:** Hooks, componentes, E2E
+- Vitest y React Testing Library para hooks, componentes y navegación en jsdom
 
 ---
 
@@ -70,8 +57,8 @@ Hotel Diva 2026 es una aplicación web de última generación desarrollada con R
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/yourusername/hotel-diva-2026.git
-cd hotel-diva-2026
+git clone https://github.com/fernandogonard/diva-completo.git
+cd diva-completo
 
 # Instalar dependencias
 npm install
@@ -99,22 +86,9 @@ npm run lint         # Validar código
 
 ---
 
-## 📈 Auditoría CTO - Score 9.2/10 (A+)
+## Verificación local
 
-| TIER | Componente | Score | Estado |
-|------|-----------|-------|--------|
-| 1 | Arquitectura & TypeScript | 10/10 | ✅ |
-| 2 | React Router & Navegación | 10/10 | ✅ |
-| 3 | Testing & QA | 10/10 | ✅ |
-| 4 | Performance & SEO | 9.2/10 | ✅ |
-
-### Highlights
-- ✅ 4 custom hooks optimizados
-- ✅ 36/36 tests passing (100%)
-- ✅ TypeScript strict mode
-- ✅ SEO audit 100/100
-- ✅ Core Web Vitals configurados
-- ✅ 0 errores en build
+Ejecutar `npm run lint`, `npm test -- --run` y `npm run build` antes de publicar. Las métricas de rendimiento deben medirse en el entorno desplegado; no se garantiza una puntuación fija de Lighthouse ni de SEO.
 
 ---
 
@@ -141,26 +115,12 @@ git push origin main
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 ```
 
----
+### Límite SEO de la SPA
 
-## 📊 Performance Metrics
-
-### Core Web Vitals
-- ✅ LCP: < 2.5s
-- ✅ INP: < 200ms
-- ✅ CLS: < 0.1
-- ✅ FCP: < 1.8s
-- ✅ TTFB: < 600ms
-
-### SEO Score: 100/100
-- ✅ Meta tags optimizados
-- ✅ Schema.org markup
-- ✅ robots.txt + sitemap.xml
-- ✅ Open Graph tags
-- ✅ Canonical URLs
+El HTML inicial contiene metadatos y el schema del inicio. Los títulos, descripciones, canonical y contenido de las otras rutas se actualizan en el cliente después de ejecutar JavaScript; algunos crawlers y extractores de redes sociales pueden no procesarlos. Si el posicionamiento o las vistas previas por ruta son prioritarios, conviene evaluar prerenderizado estático para las rutas públicas o SSR. No se requiere migrar de framework para aplicar esa mejora, y esta configuración no afirma que ya exista.
 
 ---
 
@@ -187,4 +147,4 @@ src/
 
 ---
 
-**Status:** ✅ Production Ready | **Last Updated:** Diciembre 4, 2024
+**Dominio canónico configurado:** `https://diva-hotel-mar-del-plata.netlify.app`. Confirmar el dominio de producción antes de cambiarlo en metadatos, sitemap y robots.

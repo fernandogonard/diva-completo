@@ -8,6 +8,11 @@ describe('useHeadMetadata', () => {
     document.querySelectorAll('meta[name], meta[property]').forEach(el => {
       el.remove()
     })
+    document.querySelectorAll('link[rel="canonical"], script[data-page-schema]').forEach(el => {
+      el.remove()
+    })
+    document.title = ''
+    document.documentElement.lang = ''
   })
 
   afterEach(() => {
@@ -15,6 +20,10 @@ describe('useHeadMetadata', () => {
     document.querySelectorAll('meta[name], meta[property]').forEach(el => {
       el.remove()
     })
+    document.querySelectorAll('link[rel="canonical"], script[data-page-schema]').forEach(el => {
+      el.remove()
+    })
+    document.documentElement.lang = ''
   })
 
   it('debería actualizar document.title', () => {
@@ -67,7 +76,7 @@ describe('useHeadMetadata', () => {
     const metadata = {
       title: 'Hotel Diva',
       description: 'Descripción del hotel',
-      ogImage: '/images/og-image.webp',
+      ogImage: '/images/hero.webp',
     }
 
     // Act
@@ -75,7 +84,8 @@ describe('useHeadMetadata', () => {
 
     // Assert
     const ogImage = document.querySelector('meta[property="og:image"]')
-    expect(ogImage?.getAttribute('content')).toBe('/images/og-image.webp')
+    expect(ogImage?.getAttribute('content'))
+      .toBe('https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp')
   })
 
   it('debería actualizar canonical URL', () => {
@@ -135,5 +145,51 @@ describe('useHeadMetadata', () => {
     expect(document.title).toBe('Page 2')
     const metaDescription = document.querySelector('meta[name="description"]')
     expect(metaDescription?.getAttribute('content')).toBe('Description 2')
+  })
+
+  it('debería mantener Open Graph y Twitter sincronizados con la ruta actual', () => {
+    const metadata = {
+      title: 'Habitaciones | Hotel Diva',
+      description: 'Opciones de habitaciones en Hotel Diva.',
+      ogImage: '/images/rooms/matrimonial-1.webp',
+      canonical: '/habitaciones',
+    }
+
+    renderHook(() => useHeadMetadata(metadata))
+
+    expect(document.querySelector('meta[property="og:title"]')?.getAttribute('content'))
+      .toBe(metadata.title)
+    expect(document.querySelector('meta[property="og:description"]')?.getAttribute('content'))
+      .toBe(metadata.description)
+    expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content'))
+      .toBe('https://diva-hotel-mar-del-plata.netlify.app/habitaciones')
+    expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content'))
+      .toBe(metadata.title)
+    expect(document.querySelector('meta[name="twitter:description"]')?.getAttribute('content'))
+      .toBe(metadata.description)
+    expect(document.querySelector('meta[name="twitter:url"]')?.getAttribute('content'))
+      .toBe('https://diva-hotel-mar-del-plata.netlify.app/habitaciones')
+    expect(document.documentElement.lang).toBe('es-AR')
+    expect(document.querySelectorAll('meta[property="og:title"]')).toHaveLength(1)
+  })
+
+  it('debería quitar metadata canónica anterior en páginas sin canonical', () => {
+    const { rerender } = renderHook(
+      ({ noindex }: { noindex: boolean }) =>
+        useHeadMetadata({
+          title: 'Página',
+          description: 'Descripción',
+          canonical: noindex ? undefined : '/habitaciones',
+          noindex,
+        }),
+      { initialProps: { noindex: false } },
+    )
+
+    expect(document.querySelector('link[rel="canonical"]')).toBeInTheDocument()
+    rerender({ noindex: true })
+
+    expect(document.querySelector('link[rel="canonical"]')).toBeNull()
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content'))
+      .toBe('noindex, nofollow')
   })
 })

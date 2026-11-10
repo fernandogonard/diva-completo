@@ -31,7 +31,7 @@ function WhatsAppButton({
 
   const baseClasses = `
     ${sizeClasses[size]}
-    bg-green-500 hover:bg-green-600 
+    bg-green-700 hover:bg-green-800
     text-white rounded-full 
     flex items-center justify-center
     transition-all duration-300 ease-in-out
@@ -46,8 +46,9 @@ function WhatsAppButton({
 
   return (
     <motion.button
+      type="button"
       onClick={handleClick}
-      className={`${baseClasses} ${floatingClasses}`}
+      className={`${baseClasses} ${floatingClasses} focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, scale: 0 }}

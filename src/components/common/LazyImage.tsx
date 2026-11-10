@@ -38,16 +38,12 @@ export function LazyImage({
     onLoad?.();
   };
 
-  const Wrapper: any = priority ? 'div' : motion.div;
-
   return (
-    <Wrapper
+    <motion.div
       className={`relative overflow-hidden bg-gray-100 ${className}`}
-      {...(!priority && {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 0.3 },
-      })}
+      initial={priority ? false : { opacity: 0 }}
+      animate={priority ? undefined : { opacity: 1 }}
+      transition={priority ? undefined : { duration: 0.3 }}
     >
       {/* Skeleton */}
       {!isLoaded && !error && (
@@ -76,10 +72,14 @@ export function LazyImage({
         />
       ) : (
         /* Error fallback */
-        <div className="w-full h-full flex items-center justify-center bg-gray-100">
-          <span className="text-gray-400 text-sm">Imagen no disponible</span>
+        <div
+          className="w-full h-full flex items-center justify-center bg-gray-100"
+          role="img"
+          aria-label={alt ? `${alt} (imagen no disponible)` : 'Imagen no disponible'}
+        >
+          <span className="text-sm text-gray-600">Imagen no disponible</span>
         </div>
       )}
-    </Wrapper>
+    </motion.div>
   );
 }

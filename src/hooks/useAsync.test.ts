@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useAsync } from './useAsync';
 
 describe('useAsync', () => {
@@ -44,22 +44,28 @@ describe('useAsync', () => {
   });
 
   it('debería cambiar estados durante ejecución asincrónica', async () => {
+    let resolveAsync!: (value: { data: string }) => void;
     const mockAsyncFunction = vi.fn(
-      () => new Promise(resolve => setTimeout(() => resolve({ data: 'delayed' }), 50))
+      () => new Promise<{ data: string }>((resolve) => {
+        resolveAsync = resolve;
+      }),
     );
 
     const { result } = renderHook(() => useAsync(mockAsyncFunction, false));
 
     expect(result.current.loading).toBe(false);
 
-    result.current.execute();
+    let execution!: Promise<void>;
+    act(() => {
+      execution = result.current.execute();
+    });
+    expect(result.current.loading).toBe(true);
 
-    // Esperar a que termine
-    await waitFor(
-      () => {
-        expect(result.current.loading).toBe(false);
-      },
-      { timeout: 200 }
-    );
+    await act(async () => {
+      resolveAsync({ data: 'delayed' });
+      await execution;
+    });
+    expect(result.current.loading).toBe(false);
+    expect(result.current.data).toEqual({ data: 'delayed' });
   });
 });

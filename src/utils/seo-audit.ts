@@ -24,7 +24,7 @@ export interface SEOAuditReport {
 /**
  * Auditoría completa de SEO
  */
-export function performSEOAudit(): SEOAuditReport {
+export async function performSEOAudit(): Promise<SEOAuditReport> {
   const results: SEOAuditResult[] = [];
   const timestamp = new Date().toISOString();
 
@@ -32,7 +32,7 @@ export function performSEOAudit(): SEOAuditReport {
   const titleTag = document.querySelector('title');
   results.push({
     category: 'Meta Tags - Title',
-    passed: !!titleTag && titleTag.textContent!.length > 0,
+    passed: !!titleTag?.textContent?.trim(),
     message: titleTag ? `Title: "${titleTag.textContent}"` : 'No title tag found',
     severity: !titleTag ? 'critical' : 'info',
   });
@@ -40,7 +40,7 @@ export function performSEOAudit(): SEOAuditReport {
   const metaDescription = document.querySelector('meta[name="description"]');
   results.push({
     category: 'Meta Tags - Description',
-    passed: !!metaDescription && metaDescription.getAttribute('content')!.length > 0,
+    passed: !!metaDescription?.getAttribute('content')?.trim(),
     message: metaDescription ? `Description: "${metaDescription.getAttribute('content')}"` : 'No meta description',
     severity: !metaDescription ? 'critical' : 'info',
   });
@@ -58,7 +58,7 @@ export function performSEOAudit(): SEOAuditReport {
   const images = document.querySelectorAll('img');
   let imagesWithAlt = 0;
   images.forEach(img => {
-    if (img.getAttribute('alt') || img.getAttribute('aria-hidden')) {
+    if (img.hasAttribute('alt') || img.getAttribute('aria-hidden') === 'true') {
       imagesWithAlt++;
     }
   });
@@ -78,31 +78,31 @@ export function performSEOAudit(): SEOAuditReport {
     severity: !schemaOrg ? 'warning' : 'info',
   });
 
-  // 5. Robots.txt
-  fetch('/robots.txt')
-    .then(r => r.ok)
-    .catch(() => false)
-    .then(exists => {
-      results.push({
-        category: 'Robots.txt',
-        passed: exists,
-        message: exists ? 'robots.txt is accessible' : 'robots.txt not found',
-        severity: !exists ? 'warning' : 'info',
-      });
-    });
-
-  // 6. Sitemap.xml
-  fetch('/sitemap.xml')
-    .then(r => r.ok)
-    .catch(() => false)
-    .then(exists => {
-      results.push({
-        category: 'Sitemap.xml',
-        passed: exists,
-        message: exists ? 'sitemap.xml is accessible' : 'sitemap.xml not found',
-        severity: !exists ? 'warning' : 'info',
-      });
-    });
+  const resourceChecks = await Promise.all(
+    [
+      { path: '/robots.txt', category: 'Robots.txt' },
+      { path: '/sitemap.xml', category: 'Sitemap.xml' },
+    ].map(async ({ path, category }) => {
+      try {
+        const response = await fetch(path);
+        return {
+          category,
+          passed: response.ok,
+          message: response.ok ? `${path} is accessible` : `${path} returned HTTP ${response.status}`,
+          severity: response.ok ? 'info' as const : 'warning' as const,
+        };
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : 'Unknown network error';
+        return {
+          category,
+          passed: false,
+          message: `Could not verify ${path}: ${detail}`,
+          severity: 'warning' as const,
+        };
+      }
+    }),
+  );
+  results.push(...resourceChecks);
 
   // 7. Open Graph tags
   const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -163,8 +163,8 @@ export function performSEOAudit(): SEOAuditReport {
 /**
  * Log SEO Audit Report
  */
-export function logSEOAuditReport() {
-  const report = performSEOAudit();
+export async function logSEOAuditReport() {
+  const report = await performSEOAudit();
   console.group('📋 SEO Audit Report');
   console.log(`Score: ${report.score}/100`);
   console.log(`⏰ ${new Date(report.timestamp).toLocaleString()}`);

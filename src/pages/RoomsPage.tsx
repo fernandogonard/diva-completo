@@ -6,7 +6,8 @@ function RoomsPage() {
     title: 'Habitaciones | Hotel Diva Mar del Plata',
     description: 'Descubre nuestras habitaciones cómodas y modernas en Hotel Diva. Matrimonial, twin, triple y cuádruple. Todas con wifi gratuito y estacionamiento.',
     keywords: ['habitaciones', 'hotel', 'mar del plata', 'alojamiento'],
-    ogImage: '/images/rooms-og.webp',
+    ogImage: '/images/rooms/matrimonial-1.webp',
+    canonical: '/habitaciones',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -16,7 +17,8 @@ function RoomsPage() {
   });
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
+      <h1 className="sr-only">Habitaciones del Hotel Diva</h1>
       <RoomsSection />
     </main>
   );

@@ -8,12 +8,14 @@ const GalleryPage = lazy(() => import('../pages/GalleryPage'));
 const GroupsPage = lazy(() => import('../pages/GroupsPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
 const EventosPage = lazy(() => import('../pages/EventosPage'));
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage'));
 
 // Loading fallback
 function PageLoader() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex min-h-screen items-center justify-center" role="status" aria-label="Cargando página">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <span className="sr-only">Cargando página</span>
     </div>
   );
 }
@@ -28,8 +30,7 @@ export function AppRoutes() {
         <Route path="/grupos" element={<GroupsPage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route path="/eventos" element={<EventosPage />} />
-        {/* 404 - Redirect to home */}
-        <Route path="*" element={<HomePage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   );

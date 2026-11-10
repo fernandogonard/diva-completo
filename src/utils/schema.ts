@@ -1,141 +1,115 @@
-﻿/**
- * Schema.org JSON-LD Utilities
- * Implementación de structured data para SEO
+/**
+ * Schema.org JSON-LD utilities for the hotel's verified public information.
  */
 
+import { HOTEL_INFO, SITE_URL } from '../constants';
+
+interface PostalAddressSchema {
+  '@type': 'PostalAddress';
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: string;
+}
+
 export interface SchemaOrganization {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': 'Organization';
   name: string;
   description: string;
   url: string;
   telephone: string;
   email: string;
-  address: {
-    "@type": string;
-    streetAddress: string;
-    addressLocality: string;
-    addressRegion: string;
-    postalCode: string;
-    addressCountry: string;
-  };
+  address: PostalAddressSchema;
   sameAs: string[];
   logo: string;
 }
 
 export interface SchemaBreadcrumb {
-  "@context": string;
-  "@type": string;
+  '@context': string;
+  '@type': 'BreadcrumbList';
   itemListElement: Array<{
-    "@type": string;
+    '@type': 'ListItem';
     position: number;
     name: string;
     item: string;
   }>;
 }
 
-export interface SchemaLocalBusiness {
-  "@context": string;
-  "@type": string;
+export interface SchemaHotel {
+  '@context': string;
+  '@type': 'Hotel';
+  '@id': string;
   name: string;
   description: string;
   image: string;
   telephone: string;
-  priceRange: string;
-  address: {
-    "@type": string;
-    streetAddress: string;
-    addressLocality: string;
-    addressRegion: string;
-    addressCountry: string;
-  };
-  geo: {
-    "@type": string;
-    latitude: number;
-    longitude: number;
-  };
+  email: string;
+  address: PostalAddressSchema;
+  sameAs: string[];
   url: string;
-  aggregateRating?: {
-    "@type": string;
-    ratingValue: string;
-    reviewCount: string;
-  };
 }
 
-/**
- * Crear schema de Organización
- */
+export type SchemaLocalBusiness = SchemaHotel;
+export type SupportedSchema = SchemaOrganization | SchemaHotel | SchemaBreadcrumb;
+
+const address: PostalAddressSchema = {
+  '@type': 'PostalAddress',
+  streetAddress: 'Calle Garay 1630',
+  addressLocality: 'Mar del Plata',
+  addressRegion: 'Buenos Aires',
+  postalCode: '7600',
+  addressCountry: 'AR',
+};
+
+const description =
+  'Hotel en Mar del Plata especializado en turismo, grupos deportivos y eventos.';
+const socialProfiles = ['https://www.instagram.com/hoteldivamdp/'];
+
 export function createOrganizationSchema(): SchemaOrganization {
   return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Hotel Diva",
-    description:
-      "Hotel en Mar del Plata especializado en turismo, grupos deportivos y eventos. Cocina propia, atención 24hs.",
-    url: "https://diva-hotel-mar-del-plata.netlify.app",
-    telephone: "+54 9 2235 03-3585",
-    email: "matias@hoteldiva.com.ar",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Garay 1630",
-      addressLocality: "Mar del Plata",
-      addressRegion: "Buenos Aires",
-      postalCode: "7600",
-      addressCountry: "AR",
-    },
-    sameAs: [
-      "https://www.facebook.com/p/Hotel-Diva-MDP-100076003113878/",
-      "https://www.instagram.com/hoteldivamdp/",
-    ],
-    logo: "https://diva-hotel-mar-del-plata.netlify.app/images/logo.webp",
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: HOTEL_INFO.name,
+    description,
+    url: SITE_URL,
+    telephone: '+542235033585',
+    email: HOTEL_INFO.email,
+    address,
+    sameAs: socialProfiles,
+    logo: `${SITE_URL}/images/logo.webp`,
   };
 }
 
-/**
- * Crear schema de Local Business (Hotel)
- */
-export function createLocalBusinessSchema(): SchemaLocalBusiness {
+export function createHotelSchema(): SchemaHotel {
   return {
-    "@context": "https://schema.org",
-    "@type": "Hotel",
-    name: "Hotel Diva",
-    description:
-      "Hotel en Mar del Plata con habitaciones para turismo, grupos deportivos, contingentes y eventos. Cocina propia, desayuno buffet y atención personalizada.",
-    image: "https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp",
-    telephone: "+54 9 2235 03-3585",
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Garay 1630",
-      addressLocality: "Mar del Plata",
-      addressRegion: "Buenos Aires",
-      addressCountry: "AR",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: -38.0036,
-      longitude: -57.5599,
-    },
-    url: "https://diva-hotel-mar-del-plata.netlify.app",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.4",
-      reviewCount: "128",
-    },
+    '@context': 'https://schema.org',
+    '@type': 'Hotel',
+    '@id': `${SITE_URL}/`,
+    name: HOTEL_INFO.name,
+    description,
+    image: `${SITE_URL}/images/hero.webp`,
+    telephone: '+542235033585',
+    email: HOTEL_INFO.email,
+    address,
+    sameAs: socialProfiles,
+    url: SITE_URL,
   };
 }
 
-/**
- * Crear schema de Breadcrumb Navigation
- */
+export function createLocalBusinessSchema(): SchemaLocalBusiness {
+  return createHotelSchema();
+}
+
 export function createBreadcrumbSchema(
   items: Array<{ name: string; url: string }>,
 ): SchemaBreadcrumb {
   return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
     itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
+      '@type': 'ListItem',
       position: index + 1,
       name: item.name,
       item: item.url,
@@ -143,38 +117,20 @@ export function createBreadcrumbSchema(
   };
 }
 
-/**
- * Inyectar schema JSON-LD en el documento
- */
-export function injectSchema(
-  schema: SchemaOrganization | SchemaLocalBusiness | SchemaBreadcrumb,
-  id?: string,
-) {
-  // Remover schema anterior si existe
+export function injectSchema(schema: SupportedSchema, id?: string): void {
   if (id) {
-    const existing = document.getElementById(id);
-    if (existing) {
-      existing.remove();
-    }
+    document.getElementById(id)?.remove();
   }
 
-  const script = document.createElement("script");
-  script.type = "application/ld+json";
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
   script.id = id || `schema-${Date.now()}`;
   script.textContent = JSON.stringify(schema);
   document.head.appendChild(script);
 }
 
-/**
- * Inyectar múltiples schemas
- */
 export function injectSchemas(
-  schemas: Array<{
-    schema: SchemaOrganization | SchemaLocalBusiness | SchemaBreadcrumb;
-    id?: string;
-  }>,
-) {
-  schemas.forEach(({ schema, id }) => {
-    injectSchema(schema, id);
-  });
+  schemas: Array<{ schema: SupportedSchema; id?: string }>,
+): void {
+  schemas.forEach(({ schema, id }) => injectSchema(schema, id));
 }

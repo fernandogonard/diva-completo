@@ -8,7 +8,7 @@ import { useSmoothScroll } from '../../hooks';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 50);
   const location = useLocation();
   const scroll = useSmoothScroll();
 
@@ -17,12 +17,10 @@ function Header() {
   const showSolid = !isHomePage || isScrolled;
 
   useEffect(() => {
-    // Resetear scroll state al cambiar de página
-    setIsScrolled(window.scrollY > 50);
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+  }, []);
 
   const handleNavClick = useCallback(
     (href: string, path: string) => {
@@ -49,13 +47,15 @@ function Header() {
       >
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
-          <motion.a
-            href="#home"
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-3 flex-shrink-0"
+          <Link
+            to="/"
+            className="flex flex-shrink-0 items-center gap-3 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700"
             onClick={(e) => {
-              e.preventDefault();
-              scroll('#home');
+              setIsOpen(false);
+              if (location.pathname === '/') {
+                e.preventDefault();
+                scroll('#home');
+              }
             }}
           >
             <img
@@ -73,7 +73,7 @@ function Header() {
             >
               Hotel Diva
             </span>
-          </motion.a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-1">
@@ -83,17 +83,18 @@ function Header() {
                 key={item.name}
                 to={item.path}
                 onClick={() => handleNavClick(item.href, item.path)}
-                className={`relative group px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+                className={`relative group px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 ${
                   showSolid
-                    ? 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50'
+                    ? 'text-secondary-700 hover:text-primary-700 hover:bg-primary-50'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
                 } ${
                   location.pathname === item.path
                     ? showSolid
-                      ? 'text-primary-600 bg-primary-50'
+                      ? 'text-primary-700 bg-primary-50'
                       : 'text-white bg-white/10'
                     : ''
                 }`}
+                aria-current={location.pathname === item.path ? 'page' : undefined}
               >
                 {item.name}
                 {/* underline indicator */}
@@ -111,9 +112,9 @@ function Header() {
             {/* Campaigns — pills pequeñas */}
             {CAMPAIGNS.map((campaign) => {
               const isExternal = campaign.url.startsWith('http');
-              const pillClass = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 whitespace-nowrap ${
+              const pillClass = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 whitespace-nowrap ${
                 showSolid
-                  ? 'bg-primary-100 text-primary-700 hover:bg-primary-600 hover:text-white'
+                  ? 'bg-primary-100 text-primary-700 hover:bg-primary-700 hover:text-white'
                   : 'bg-white/15 text-white hover:bg-white/30'
               }`;
               return isExternal ? (
@@ -148,10 +149,10 @@ function Header() {
               href={`tel:${HOTEL_INFO.phone}`}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-700 whitespace-nowrap ${
                 showSolid
-                  ? 'border-primary-500 text-primary-600 hover:bg-primary-500 hover:text-white'
-                  : 'border-white/80 text-white hover:bg-white hover:text-primary-600'
+                  ? 'border-primary-700 text-primary-700 hover:bg-primary-700 hover:text-white'
+                  : 'border-white/80 text-white hover:bg-white hover:text-primary-700'
               }`}
               aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(HOTEL_INFO.phone)}`}
             >
@@ -163,12 +164,14 @@ function Header() {
           {/* Mobile Button */}
           <div className="lg:hidden">
             <motion.button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 ${
+              className={`p-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 ${
                 showSolid ? 'text-secondary-700' : 'text-white'
               }`}
               aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
               aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
               {isOpen ? (
                 <X className="w-6 h-6" aria-hidden="true" />
@@ -180,23 +183,26 @@ function Header() {
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden bg-white/95 backdrop-blur-md border-t border-secondary-200"
-              aria-label="Menú móvil"
-            >
+        <div id="mobile-navigation" className="lg:hidden">
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white/95 backdrop-blur-md border-t border-secondary-200"
+                role="group"
+                aria-label="Menú móvil"
+              >
               <div className="py-4 space-y-2">
                 {NAVIGATION_ITEMS.map((item) => (
                   <Link
                     key={item.name}
                     to={item.path}
                     onClick={() => handleNavClick(item.href, item.path)}
-                    className="block px-4 py-3 text-secondary-700 hover:text-primary-600 hover:bg-primary-50 focus:outline-none focus:bg-primary-50"
+                    className="block px-4 py-3 text-secondary-700 hover:text-primary-700 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-700"
+                    aria-current={location.pathname === item.path ? 'page' : undefined}
                   >
                     {item.name}
                   </Link>
@@ -213,7 +219,7 @@ function Header() {
                         href={campaign.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50"
+                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-700 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-700"
                         aria-label={`Ir a ${campaign.name}`}
                       >
                         → {campaign.name}
@@ -223,7 +229,7 @@ function Header() {
                         key={campaign.name}
                         to={campaign.url}
                         onClick={() => setIsOpen(false)}
-                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50"
+                        className="block px-2 py-2 text-sm text-secondary-700 hover:text-primary-700 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-700"
                       >
                         → {campaign.name}
                       </Link>
@@ -233,7 +239,7 @@ function Header() {
 
                 <a
                   href={`tel:${HOTEL_INFO.phone}`}
-                  className="flex items-center gap-2 px-4 py-3 text-primary-600 hover:bg-primary-50"
+                  className="flex items-center gap-2 px-4 py-3 text-primary-700 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-700"
                   aria-label={`Llamar a Hotel Diva: ${formatPhoneDisplay(
                     HOTEL_INFO.phone
                   )}`}
@@ -244,9 +250,10 @@ function Header() {
                   </span>
                 </a>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </nav>
     </motion.header>
   );

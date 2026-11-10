@@ -92,12 +92,12 @@ export function GroupsSection() {
 
                 {/* CTA Button */}
                 <motion.a
-                  href={WHATSAPP_URLS.room(service.title)}
+                  href={WHATSAPP_URLS.group(service.title)}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  className="w-full rounded-lg bg-primary-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2 flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Consultar
@@ -175,7 +175,7 @@ export function GroupsSection() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white py-3 px-8 rounded-lg font-semibold text-lg transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-primary-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2"
           >
             <MessageCircle className="w-5 h-5" />
             Contactar por WhatsApp

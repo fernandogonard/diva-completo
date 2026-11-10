@@ -5,66 +5,76 @@ import { LazyImage } from '../common';
 import { useReducedMotion } from '../../hooks';
 import type { GalleryImage } from '../../types';
 
+const galleryImages: GalleryImage[] = [
+  { id: '1', src: '/images/gallery/gallery-1.webp', alt: 'Recepción y lobby del Hotel Diva - Primera impresión', category: 'General' },
+  { id: '2', src: '/images/gallery/gallery-2.webp', alt: 'Área común y sala de estar - Espacio de descanso', category: 'General' },
+  { id: '3', src: '/images/gallery/gallery-3.webp', alt: 'Comedor y desayunador - Servicio gastronómico', category: 'General' },
+  { id: '4', src: '/images/gallery/gallery-4.webp', alt: 'Terraza exterior - Vista y esparcimiento', category: 'General' },
+  { id: '5', src: '/images/gallery/gallery-5.webp', alt: 'Escaleras y pasillos - Acceso a habitaciones', category: 'General' },
+  { id: '6', src: '/images/gallery/gallery-6.webp', alt: 'Detalles decorativos - Diseño interior', category: 'General' },
+  { id: '7', src: '/images/gallery/gallery-7.webp', alt: 'Hotel iluminado de noche - Ambiente nocturno', category: 'General' },
+  { id: '8', src: '/images/gallery/gallery-8.webp', alt: 'Entrada principal del Hotel Diva - Fachada', category: 'General' },
+];
+
 function GallerySection() {
   const prefersReducedMotion = useReducedMotion();
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const isModalOpen = currentIndex !== null;
+  const selectedImage = currentIndex === null ? null : galleryImages[currentIndex];
 
-  // Focus management for modal accessibility
   useEffect(() => {
-    if (selectedImage && closeButtonRef.current) {
-      closeButtonRef.current.focus();
+    if (!isModalOpen) {
+      previouslyFocusedElementRef.current?.focus();
+      return;
     }
-  }, [selectedImage]);
 
-  // Keyboard navigation
+    closeButtonRef.current?.focus();
+  }, [isModalOpen]);
+
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedImage) return;
+    if (!isModalOpen) return;
 
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setSelectedImage(null);
+        setCurrentIndex(null);
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        handlePrevious();
+        setCurrentIndex((index) =>
+          index === null ? null : (index - 1 + galleryImages.length) % galleryImages.length,
+        );
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        handleNext();
+        setCurrentIndex((index) =>
+          index === null ? null : (index + 1) % galleryImages.length,
+        );
+      } else if (e.key === 'Tab') {
+        const focusableElements =
+          modalRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])');
+        if (!focusableElements?.length) return;
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
       }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, currentIndex]);
+  }, [isModalOpen]);
 
-  const galleryImages: GalleryImage[] = [
-    { id: '1', src: '/images/gallery/gallery-1.webp', alt: 'Recepción y lobby del Hotel Diva - Primera impresión', category: 'General' },
-    { id: '2', src: '/images/gallery/gallery-2.webp', alt: 'Área común y sala de estar - Espacio de descanso', category: 'General' },
-    { id: '3', src: '/images/gallery/gallery-3.webp', alt: 'Comedor y desayunador - Servicio gastronómico', category: 'General' },
-    { id: '4', src: '/images/gallery/gallery-4.webp', alt: 'Terraza exterior - Vista y esparcimiento', category: 'General' },
-    { id: '5', src: '/images/gallery/gallery-5.webp', alt: 'Escaleras y pasillos - Acceso a habitaciones', category: 'General' },
-    { id: '6', src: '/images/gallery/gallery-6.webp', alt: 'Detalles decorativos - Diseño interior', category: 'General' },
-    { id: '7', src: '/images/gallery/gallery-7.webp', alt: 'Hotel iluminado de noche - Ambiente nocturno', category: 'General' },
-    { id: '8', src: '/images/gallery/gallery-8.webp', alt: 'Entrada principal del Hotel Diva - Fachada', category: 'General' },
-  ];
-
-  const handleImageClick = (image: GalleryImage, index: number) => {
-    setSelectedImage(image);
+  const handleImageClick = (index: number) => {
+    const activeElement = document.activeElement;
+    previouslyFocusedElementRef.current =
+      activeElement instanceof HTMLElement ? activeElement : null;
     setCurrentIndex(index);
-  };
-
-  const handlePrevious = () => {
-    const newIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
-    setSelectedImage(galleryImages[newIndex]);
-    setCurrentIndex(newIndex);
-  };
-
-  const handleNext = () => {
-    const newIndex = currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1;
-    setSelectedImage(galleryImages[newIndex]);
-    setCurrentIndex(newIndex);
   };
 
   return (
@@ -78,9 +88,8 @@ function GallerySection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           viewport={{ once: true }}
           className="text-center mb-16"
-          aria-label="Galería de instalaciones del hotel"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-secondary-800 mb-6">
+          <h2 id="gallery-heading" className="text-4xl md:text-5xl font-display font-bold text-secondary-800 mb-6">
             Conoce Nuestras Instalaciones
           </h2>
           <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
@@ -104,8 +113,9 @@ function GallerySection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.4, delay }}
                 viewport={{ once: true }}
-                className="relative overflow-hidden rounded-xl cursor-pointer group h-48 border-0 p-0"
-                onClick={() => handleImageClick(image, index)}
+                type="button"
+                className="relative h-48 cursor-pointer overflow-hidden rounded-xl border-0 p-0 group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+                onClick={() => handleImageClick(index)}
                 aria-label={`Ver ${image.alt} en pantalla completa`}
               >
                 <LazyImage
@@ -119,7 +129,7 @@ function GallerySection() {
 
                 {/* Hover overlay */}
                 <div
-                  className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
                   aria-hidden="true"
                 >
                   <p className="text-white font-semibold text-center px-2">
@@ -133,7 +143,7 @@ function GallerySection() {
 
         {/* Modal */}
         <AnimatePresence>
-          {selectedImage && (
+          {selectedImage && currentIndex !== null && (
             <motion.div
               ref={modalRef}
               initial={{ opacity: 0 }}
@@ -141,10 +151,10 @@ function GallerySection() {
               exit={{ opacity: 0 }}
               transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
               className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-              onClick={() => setSelectedImage(null)}
+              onClick={() => setCurrentIndex(null)}
               role="dialog"
               aria-modal="true"
-              aria-label="Visor de galería"
+              aria-labelledby="gallery-dialog-caption"
             >
               <div
                 className="relative max-w-4xl w-full"
@@ -152,9 +162,10 @@ function GallerySection() {
               >
                 {/* Close */}
                 <motion.button
+                  type="button"
                   ref={closeButtonRef}
-                  className="absolute -top-10 right-0 text-white hover:text-primary-400"
-                  onClick={() => setSelectedImage(null)}
+                  className="absolute -top-10 right-0 rounded text-white hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  onClick={() => setCurrentIndex(null)}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="Cerrar galería"
@@ -183,8 +194,13 @@ function GallerySection() {
 
                 {/* Navigation */}
                 <motion.button
-                  onClick={handlePrevious}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 text-white hover:text-primary-400"
+                  type="button"
+                  onClick={() =>
+                    setCurrentIndex((index) =>
+                      index === null ? null : (index - 1 + galleryImages.length) % galleryImages.length,
+                    )
+                  }
+                  className="absolute left-0 top-1/2 -translate-x-16 -translate-y-1/2 rounded text-white hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="Imagen anterior"
@@ -193,8 +209,13 @@ function GallerySection() {
                 </motion.button>
 
                 <motion.button
-                  onClick={handleNext}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 text-white hover:text-primary-400"
+                  type="button"
+                  onClick={() =>
+                    setCurrentIndex((index) =>
+                      index === null ? null : (index + 1) % galleryImages.length,
+                    )
+                  }
+                  className="absolute right-0 top-1/2 translate-x-16 -translate-y-1/2 rounded text-white hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="Imagen siguiente"
@@ -212,7 +233,9 @@ function GallerySection() {
 
                 {/* Caption */}
                 <div className="absolute -bottom-10 left-0 right-0 text-center text-white">
-                  <p className="font-semibold">{selectedImage.alt}</p>
+                  <p id="gallery-dialog-caption" className="font-semibold">
+                    {selectedImage.alt}
+                  </p>
                 </div>
               </div>
             </motion.div>

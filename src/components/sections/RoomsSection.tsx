@@ -74,15 +74,17 @@ function RoomsSection() {
                     {images.length > 1 && (
                       <>
                         <button
+                          type="button"
                           onClick={() => setRoomImage(room.id, (activeIdx - 1 + images.length) % images.length)}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/65 text-white rounded-full p-1.5 transition-colors"
+                          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-1.5 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                           aria-label="Foto anterior"
                         >
                           <ChevronLeft className="w-4 h-4" />
                         </button>
                         <button
+                          type="button"
                           onClick={() => setRoomImage(room.id, (activeIdx + 1) % images.length)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/65 text-white rounded-full p-1.5 transition-colors"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 p-1.5 text-white transition-colors hover:bg-black/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                           aria-label="Foto siguiente"
                         >
                           <ChevronRight className="w-4 h-4" />
@@ -92,12 +94,14 @@ function RoomsSection() {
                         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
                           {images.map((_, i) => (
                             <button
+                              type="button"
                               key={i}
                               onClick={() => setRoomImage(room.id, i)}
-                              className={`h-2 rounded-full transition-all duration-200 ${
+                              className={`h-2 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                                 i === activeIdx ? 'w-5 bg-white' : 'w-2 bg-white/55 hover:bg-white/80'
                               }`}
                               aria-label={`Foto ${i + 1}`}
+                              aria-current={i === activeIdx ? 'true' : undefined}
                             />
                           ))}
                         </div>
@@ -105,14 +109,14 @@ function RoomsSection() {
                     )}
 
                     {/* Capacidad badge */}
-                    <div className="absolute top-3 left-3 bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow">
+                    <div className="absolute top-3 left-3 bg-primary-700 text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow">
                       <Users className="w-3 h-3" aria-hidden="true" />
                       <span>{room.capacity} {room.capacity <= 2 ? 'personas' : 'personas'}</span>
                     </div>
 
                     {/* Contador fotos */}
                     {images.length > 1 && (
-                      <div className="absolute top-3 right-3 bg-black/45 text-white text-xs px-2 py-0.5 rounded-full">
+                      <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-0.5 rounded-full">
                         {activeIdx + 1}/{images.length}
                       </div>
                     )}
@@ -154,8 +158,9 @@ function RoomsSection() {
                     </div>
 
                     <button
-                      onClick={() => handleRoomContact(room.name)}
-                      className="w-full bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center gap-2"
+                      type="button"
+                      onClick={() => handleRoomContact(room.id)}
+                      className="w-full rounded-xl bg-primary-700 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-primary-800 active:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2 flex items-center justify-center gap-2"
                       aria-label={`Consultar disponibilidad de ${room.name} por WhatsApp`}
                     >
                       <MessageCircle className="w-5 h-5" aria-hidden="true" />

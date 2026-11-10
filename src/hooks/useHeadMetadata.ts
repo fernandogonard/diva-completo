@@ -1,4 +1,5 @@
 ﻿import { useEffect } from 'react';
+import { SITE_URL } from '../constants';
 import type { PageMetadata } from '../types';
 
 /**
@@ -9,91 +10,117 @@ import type { PageMetadata } from '../types';
  * useHeadMetadata({
  *   title: 'Habitaciones | Hotel Diva',
  *   description: 'Descubre nuestras habitaciones...',
- *   ogImage: '/images/rooms.webp',
+ *   ogImage: '/images/rooms/matrimonial-1.webp',
  *   schema: { "@type": "Room", ... }
  * })
  */
 export function useHeadMetadata(metadata: PageMetadata) {
+  const keywords = metadata.keywords?.join(', ');
+  const schema = metadata.schema ? JSON.stringify(metadata.schema) : undefined;
+
   useEffect(() => {
-    // Actualizar title
     document.title = metadata.title;
+    document.documentElement.lang = 'es-AR';
 
-    // Actualizar o crear meta description
-    let descMeta = document.querySelector('meta[name="description"]');
-    if (!descMeta) {
-      descMeta = document.createElement('meta');
-      descMeta.setAttribute('name', 'description');
-      document.head.appendChild(descMeta);
-    }
-    descMeta.setAttribute('content', metadata.description);
-
-    // Actualizar meta keywords si existen
-    if (metadata.keywords?.length) {
-      let keywordsMeta = document.querySelector('meta[name="keywords"]');
-      if (!keywordsMeta) {
-        keywordsMeta = document.createElement('meta');
-        keywordsMeta.setAttribute('name', 'keywords');
-        document.head.appendChild(keywordsMeta);
+    const setMeta = (
+      selector: string,
+      attribute: 'name' | 'property',
+      key: string,
+      content: string,
+    ) => {
+      const matches = document.head.querySelectorAll<HTMLMetaElement>(selector);
+      let element = matches[0];
+      matches.forEach((duplicate, index) => {
+        if (index > 0) duplicate.remove();
+      });
+      if (!content) {
+        element?.remove();
+        return;
       }
-      keywordsMeta.setAttribute('content', metadata.keywords.join(', '));
-    }
-
-    // Actualizar Open Graph
-    if (metadata.ogImage) {
-      let ogImage = document.querySelector('meta[property="og:image"]');
-      if (!ogImage) {
-        ogImage = document.createElement('meta');
-        ogImage.setAttribute('property', 'og:image');
-        document.head.appendChild(ogImage);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
       }
-      ogImage.setAttribute('content', metadata.ogImage);
-    }
+      element.content = content;
+    };
 
-    if (metadata.ogType) {
-      let ogType = document.querySelector('meta[property="og:type"]');
-      if (!ogType) {
-        ogType = document.createElement('meta');
-        ogType.setAttribute('property', 'og:type');
-        document.head.appendChild(ogType);
-      }
-      ogType.setAttribute('content', metadata.ogType);
-    }
+    const canonicalUrl = metadata.canonical
+      ? new URL(metadata.canonical, SITE_URL).href
+      : undefined;
+    const imageUrl = new URL(metadata.ogImage || '/images/hero.webp', SITE_URL).href;
+    const pageTitle = metadata.title;
+    const pageDescription = metadata.description;
+    const pageType = metadata.ogType || 'website';
 
-    // Actualizar canonical
-    if (metadata.canonical) {
-      let canonical = document.querySelector('link[rel="canonical"]');
+    setMeta('meta[name="description"]', 'name', 'description', pageDescription);
+    setMeta('meta[name="keywords"]', 'name', 'keywords', keywords || '');
+    setMeta(
+      'meta[name="robots"]',
+      'name',
+      'robots',
+      metadata.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
+    );
+
+    setMeta('meta[property="og:type"]', 'property', 'og:type', pageType);
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', 'es_AR');
+    setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Hotel Diva');
+    setMeta('meta[property="og:title"]', 'property', 'og:title', pageTitle);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', pageDescription);
+    setMeta('meta[property="og:image"]', 'property', 'og:image', imageUrl);
+    setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl || '');
+    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', 'Hotel Diva en Mar del Plata');
+
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', pageTitle);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', pageDescription);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', imageUrl);
+    setMeta('meta[name="twitter:url"]', 'name', 'twitter:url', canonicalUrl || '');
+
+    const canonicals = document.head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]');
+    let canonical = canonicals[0];
+    canonicals.forEach((duplicate, index) => {
+      if (index > 0) duplicate.remove();
+    });
+    if (canonicalUrl) {
       if (!canonical) {
         canonical = document.createElement('link');
-        canonical.setAttribute('rel', 'canonical');
+        canonical.rel = 'canonical';
         document.head.appendChild(canonical);
       }
-      canonical.setAttribute('href', metadata.canonical);
+      canonical.href = canonicalUrl;
+    } else {
+      canonical?.remove();
     }
 
-    // Actualizar noindex
-    if (metadata.noindex) {
-      let robots = document.querySelector('meta[name="robots"]');
-      if (!robots) {
-        robots = document.createElement('meta');
-        robots.setAttribute('name', 'robots');
-        document.head.appendChild(robots);
-      }
-      robots.setAttribute('content', 'noindex, nofollow');
-    }
-
-    // Actualizar schema markup
-    if (metadata.schema) {
-      let schemaScript = document.querySelector('script[type="application/ld+json"][data-page-schema]');
+    const schemaScripts = document.head.querySelectorAll<HTMLScriptElement>(
+      'script[type="application/ld+json"][data-page-schema]',
+    );
+    let schemaScript = schemaScripts[0];
+    schemaScripts.forEach((duplicate, index) => {
+      if (index > 0) duplicate.remove();
+    });
+    if (schema) {
       if (!schemaScript) {
         schemaScript = document.createElement('script');
-        schemaScript.setAttribute('type', 'application/ld+json');
-        schemaScript.setAttribute('data-page-schema', 'true');
+        schemaScript.type = 'application/ld+json';
+        schemaScript.dataset.pageSchema = 'true';
         document.head.appendChild(schemaScript);
       }
-      schemaScript.textContent = JSON.stringify(metadata.schema);
+      schemaScript.textContent = schema;
+    } else {
+      schemaScript?.remove();
     }
 
-    // Scroll to top on page change
     window.scrollTo(0, 0);
-  }, [metadata]);
+  }, [
+    metadata.canonical,
+    metadata.description,
+    metadata.noindex,
+    metadata.ogImage,
+    metadata.ogType,
+    metadata.title,
+    keywords,
+    schema,
+  ]);
 }

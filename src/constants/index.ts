@@ -1,11 +1,14 @@
-﻿// Información del Hotel
+export const SITE_URL = 'https://diva-hotel-mar-del-plata.netlify.app';
+export const PREVENTA_VERANO_2027_URL = '';
+
+// Información del Hotel
 export const HOTEL_INFO = {
   name: 'Hotel Diva',
   phone: '+54 9 223 503-3585',
   whatsappNumber: '5492235033585', // Formato para WhatsApp API
   email: 'matias@hoteldiva.com.ar',
   address: 'Calle Garay 1630, Mar del Plata, Buenos Aires',
-  website: 'https://hoteldiva.com.ar',
+  website: SITE_URL,
 } as const;
 
 // URLs de WhatsApp
@@ -34,18 +37,20 @@ export const WHATSAPP_URLS = {
     }
     
     // Permitir solo tipos de habitaciones conocidos
-    const validRoomTypes = Object.keys(ROOM_TYPES);
     const sanitizedType = roomType.toLowerCase().trim();
-    
-    // Si roomType no es válido, usar genérico
-    const displayType = validRoomTypes.some(rt => rt === sanitizedType)
-      ? roomType
-      : 'una habitación';
+    const matchedRoom = Object.values(ROOM_TYPES).find(
+      (room) => room.id === sanitizedType || room.name.toLowerCase() === sanitizedType,
+    );
+    const displayType = matchedRoom?.name ?? 'una habitación';
     
     return `https://wa.me/${HOTEL_INFO.whatsappNumber}?text=${encodeURIComponent(
       `¡Hola! Me interesa la ${displayType} del Hotel Diva. ¿Podrían darme más información sobre disponibilidad y precios?`
     )}`;
   },
+  group: (groupName: string) =>
+    `https://wa.me/${HOTEL_INFO.whatsappNumber}?text=${encodeURIComponent(
+      `¡Hola! Me interesa consultar alojamiento para ${groupName} en Hotel Diva. ¿Podrían darme más información sobre disponibilidad y servicios?`,
+    )}`,
   general: () =>
     `https://wa.me/${HOTEL_INFO.whatsappNumber}?text=${encodeURIComponent(
       `¡Hola! Me gustaría obtener más información sobre Hotel Diva. ¡Gracias!`
@@ -166,21 +171,16 @@ export const NAVIGATION_ITEMS = [
   { name: 'Contacto', href: '#contact', path: '/contacto' },
 ] as const;
 
-// Campañas externas
+// Campañas y accesos destacados
 export const CAMPAIGNS = [
   {
-    name: 'Semana Santa 2026',
-    url: 'https://hotel-diva-semana-santa.netlify.app/',
-    description: 'Paquete especial de 3 noches con desayuno incluido',
+    name: 'COSAPRO 2027',
+    url: '/eventos',
+    description: 'Contactanos para que te tengamos en cuenta para el próximo COSAPRO.',
   },
   {
-    name: 'Evento COSAPRO 2026',
-    url: 'https://cosapro-hoteldiva.netlify.app/',
-    description: 'Alojamiento para asistentes del Congreso Provincial de Salud',
-  },
-  {
-    name: 'FILAPI 2026',
-    url: 'https://hoteldiva-filapi2026.netlify.app/',
-    description: 'Congreso Latinoamericano de Apicultura · 31 ago – 6 sep 2026',
+    name: 'Preventa Verano 2027',
+    url: '/eventos',
+    description: 'Pagás 6 noches, te alojás 7. Consultá disponibilidad y condiciones.',
   },
 ] as const;

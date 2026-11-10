@@ -11,23 +11,19 @@
     <!-- FAVICON & ICONOS OPTIMIZADOS -->
     <link
       rel="icon"
-      type="image/webp"
-      href="/images/logo-40.webp"
-      sizes="40x40"
+      type="image/x-icon"
+      href="/images/favicon.ico"
     />
-    <link rel="apple-touch-icon" href="/images/logo-180.webp" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
     <meta name="theme-color" content="#0ea5e9" />
 
     <!-- SEO CRÍTICO -->
-    <title>
-      Hotel Diva Mar del Plata | Habitaciones, Grupos Deportivos & Eventos
-    </title>
+    <title>Hotel Diva - Alojamiento Premium en Mar del Plata</title>
     <meta
       name="description"
-      content="Hotel Diva en Mar del Plata. Especialistas en alojamiento para turismo, grupos deportivos, contingentes y eventos. Cocina propia, atención personalizada."
+      content="Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="language" content="Spanish" />
     <meta name="author" content="Hotel Diva" />
     <meta name="publisher" content="Hotel Diva" />
     <meta
@@ -49,11 +45,11 @@
     />
     <meta
       property="og:title"
-      content="Hotel Diva Mar del Plata | Alojamiento &amp; Eventos"
+      content="Hotel Diva - Alojamiento Premium en Mar del Plata"
     />
     <meta
       property="og:description"
-      content="Alojamiento en Mar del Plata para turismo, grupos deportivos y eventos. Cocina propia y atención 24hs."
+      content="Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes."
     />
     <meta
       property="og:image"
@@ -65,10 +61,17 @@
 
     <!-- TWITTER -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hotel Diva Mar del Plata" />
+    <meta
+      name="twitter:title"
+      content="Hotel Diva - Alojamiento Premium en Mar del Plata"
+    />
     <meta
       name="twitter:description"
-      content="Especialistas en alojamiento para grupos deportivos y eventos"
+      content="Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes."
+    />
+    <meta
+      name="twitter:url"
+      content="https://diva-hotel-mar-del-plata.netlify.app/"
     />
     <meta
       name="twitter:image"
@@ -90,67 +93,44 @@
     <link rel="dns-prefetch" href="https://wa.me" />
     <link rel="dns-prefetch" href="https://maps.google.com" />
 
-    <!-- PRELOAD HERO (LCP) -->
-    <link
-      rel="preload"
-      as="image"
-      href="/images/hero.webp"
-      fetchpriority="high"
-    />
+    <!-- Preload the responsive hero only on the home route. -->
+    <script>
+      if (window.location.pathname === '/') {
+        const heroPreload = document.createElement('link');
+        heroPreload.rel = 'preload';
+        heroPreload.as = 'image';
+        heroPreload.href = '/images/hero.webp';
+        heroPreload.setAttribute(
+          'imagesrcset',
+          '/images/hero-800.webp 800w, /images/hero.webp 1920w',
+        );
+        heroPreload.setAttribute('imagesizes', '100vw');
+        heroPreload.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(heroPreload);
+      }
+    </script>
 
-    <!-- SCHEMA HOTEL -->
+    <!-- Schema.org Hotel; coordinates and ratings omitted until verified. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Hotel",
         "@id": "https://diva-hotel-mar-del-plata.netlify.app/",
         "name": "Hotel Diva",
-        "image": "https://diva-hotel-mar-del-plata.netlify.app/images/logo-180.webp",
-        "description": "Hotel en Mar del Plata especializado en turismo, grupos deportivos y eventos",
+        "image": "https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp",
+        "description": "Hotel en Mar del Plata especializado en turismo, grupos deportivos y eventos.",
         "url": "https://diva-hotel-mar-del-plata.netlify.app",
-        "telephone": "+54 9 2235 03-3585",
+        "telephone": "+542235033585",
         "email": "matias@hoteldiva.com.ar",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Garay 1630",
+          "streetAddress": "Calle Garay 1630",
           "addressLocality": "Mar del Plata",
           "addressRegion": "Buenos Aires",
           "postalCode": "7600",
           "addressCountry": "AR"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "-38.0055",
-          "longitude": "-57.5438"
-        },
-        "priceRange": "$$",
-        "amenityFeature": [
-          { "@type": "LocationFeatureSpecification", "name": "Wi-Fi gratuito" },
-          { "@type": "LocationFeatureSpecification", "name": "Recepción 24hs" },
-          { "@type": "LocationFeatureSpecification", "name": "Cocina propia" },
-          { "@type": "LocationFeatureSpecification", "name": "Limpieza diaria" }
-        ],
-        "sameAs": [
-          "https://www.facebook.com/p/Hotel-Diva-MDP-100076003113878/",
-          "https://www.instagram.com/hoteldivamdp/"
-        ]
-      }
-    </script>
-
-    <!-- SCHEMA ORGANIZATION -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Hotel Diva",
-        "url": "https://diva-hotel-mar-del-plata.netlify.app",
-        "logo": "https://diva-hotel-mar-del-plata.netlify.app/images/logo-180.webp",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "Reservas",
-          "telephone": "+54 9 2235 03-3585",
-          "email": "matias@hoteldiva.com.ar"
-        }
+        "sameAs": ["https://www.instagram.com/hoteldivamdp/"]
       }
     </script>
   </head>

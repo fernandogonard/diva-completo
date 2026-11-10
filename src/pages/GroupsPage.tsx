@@ -6,7 +6,8 @@ function GroupsPage() {
     title: 'Grupos y Contingentes | Hotel Diva',
     description: 'Especialistas en alojamiento de equipos deportivos, delegaciones y eventos masivos en Mar del Plata. Cocina propia y atención personalizada.',
     keywords: ['grupos', 'contingentes', 'eventos', 'equipos deportivos'],
-    ogImage: '/images/groups-og.webp',
+    ogImage: '/images/hero.webp',
+    canonical: '/grupos',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -16,7 +17,8 @@ function GroupsPage() {
   });
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
+      <h1 className="sr-only">Grupos y contingentes en Hotel Diva</h1>
       <GroupsSection />
     </main>
   );

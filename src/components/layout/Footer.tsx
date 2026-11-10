@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react';
 import { HOTEL_INFO } from '../../constants';
@@ -41,7 +42,7 @@ const Footer: React.FC = () => {
             <div className="space-y-3">
               <a
                 href={`tel:${HOTEL_INFO.phone}`}
-                className="flex items-center gap-3 text-secondary-200 hover:text-primary-400 transition-colors"
+                className="flex items-center gap-3 rounded text-secondary-200 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
               >
                 <Phone className="w-4 h-4" aria-hidden="true" />
                 <span>{formatPhoneDisplay(HOTEL_INFO.phone)}</span>
@@ -49,7 +50,7 @@ const Footer: React.FC = () => {
 
               <a
                 href={`mailto:${HOTEL_INFO.email}`}
-                className="flex items-center gap-3 text-secondary-200 hover:text-primary-400 transition-colors"
+                className="flex items-center gap-3 rounded text-secondary-200 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
               >
                 <Mail className="w-4 h-4" aria-hidden="true" />
                 <span>{HOTEL_INFO.email}</span>
@@ -72,22 +73,18 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
             <div className="space-y-2">
               {[
-                { name: 'Habitaciones', id: 'rooms' },
-                { name: 'Galería', id: 'gallery' },
-                { name: 'Grupos', id: 'groups' },
-                { name: 'Contacto', id: 'contact' }
+                { name: 'Habitaciones', path: '/habitaciones' },
+                { name: 'Galería', path: '/galeria' },
+                { name: 'Grupos', path: '/grupos' },
+                { name: 'Contacto', path: '/contacto' }
               ].map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    const element = document.getElementById(link.id);
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
-                  aria-label={`Ir a la sección ${link.name}`}
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="block rounded px-2 py-1 text-secondary-200 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
                 >
                   {link.name}
-                </button>
+                </Link>
               ))}
             </div>
           </motion.div>
@@ -101,33 +98,20 @@ const Footer: React.FC = () => {
           >
             <h3 className="text-lg font-semibold mb-4">Campañas</h3>
             <div className="space-y-2">
-              <a
-                href="https://hotel-diva-semana-santa.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
-                aria-label="Paquete Semana Santa 2026"
+              <Link
+                to="/eventos"
+                className="block rounded px-2 py-1 text-secondary-200 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                aria-label="Preventa Verano 2027"
               >
-                Semana Santa 2026
-              </a>
-              <a
-                href="https://cosapro-hoteldiva.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
-                aria-label="Evento Cosapro"
+                Preventa Verano 2027
+              </Link>
+              <Link
+                to="/eventos"
+                className="block rounded px-2 py-1 text-secondary-200 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                aria-label="COSAPRO 2027"
               >
-                Evento Cosapro
-              </a>
-              <a
-                href="https://hoteldiva-filapi2026.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-secondary-200 hover:text-primary-400 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded px-2 py-1"
-                aria-label="FILAPI 2026 - Congreso Latinoamericano de Apicultura"
-              >
-                🐝 FILAPI 2026
-              </a>
+                COSAPRO 2027
+              </Link>
             </div>
           </motion.div>
 
@@ -145,7 +129,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram de Hotel Diva"
-                className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-500 hover:text-white transition-colors"
+                className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-700 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -157,7 +141,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook de Hotel Diva"
-                className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-500 hover:text-white transition-colors"
+                className="w-10 h-10 bg-secondary-700 rounded-full flex items-center justify-center text-secondary-200 hover:bg-primary-700 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -182,7 +166,7 @@ const Footer: React.FC = () => {
               href="https://mgproduccionesweb.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary-400 transition-colors underline underline-offset-2"
+              className="underline underline-offset-2 transition-colors hover:text-primary-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
               aria-label="MG Soluciones Web"
             >
               MG Soluciones Web

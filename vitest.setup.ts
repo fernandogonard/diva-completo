@@ -11,6 +11,11 @@ afterEach(() => {
   cleanup()
 })
 
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: vi.fn(),
+})
+
 // Mock de window.matchMedia para prefers-reduced-motion
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -26,14 +31,29 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
-// Mock de IntersectionObserver para Framer Motion
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  takeRecords() {
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root: Element | null = null;
+  readonly rootMargin = '0px';
+  readonly thresholds: ReadonlyArray<number> = [];
+
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+    void callback;
+    void options;
+  }
+
+  disconnect(): void {}
+
+  observe(target: Element): void {
+    void target;
+  }
+
+  unobserve(target: Element): void {
+    void target;
+  }
+
+  takeRecords(): IntersectionObserverEntry[] {
     return []
   }
-  unobserve() {}
-} as any
+}
 
+vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)

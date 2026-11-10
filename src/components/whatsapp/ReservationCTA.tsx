@@ -33,7 +33,7 @@ const ReservationCTA: React.FC<ReservationCTAProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className={`bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl p-8 text-white text-center ${className}`}
+      className={`bg-gradient-to-r from-primary-700 to-primary-800 rounded-2xl p-8 text-white text-center ${className}`}
     >
       <motion.h3 
         className="text-2xl md:text-3xl font-display mb-4"
@@ -71,8 +71,9 @@ const ReservationCTA: React.FC<ReservationCTAProps> = ({
       </motion.div>
 
       <motion.button
+        type="button"
         onClick={handleReservation}
-        className="mt-8 bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-50 transition-all duration-300 flex items-center gap-3 mx-auto group"
+        className="mt-8 flex items-center gap-3 mx-auto rounded-full bg-white px-8 py-4 text-lg font-semibold text-primary-800 transition-all duration-300 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-800 group"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, y: 20 }}

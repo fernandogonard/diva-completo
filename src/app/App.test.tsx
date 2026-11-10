@@ -1,12 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from '@/App';
 
-/**
- * Tests de integración E2E (End-to-End)
- * Valida navegación entre rutas, carga de páginas, y metadata
- */
-describe('E2E - Navegación y Rutas', () => {
+describe('App - navegación y rutas', () => {
   it('debería renderizar la home page por defecto', () => {
     // Arrange
     render(<App />);
@@ -45,8 +42,7 @@ describe('E2E - Navegación y Rutas', () => {
     // Act & Assert
     // El componente debe estar envuelto en ErrorBoundary
     // Verificamos que la aplicación se renderiza sin errores
-    const headers = screen.getAllByRole('banner');
-    expect(headers.length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('banner')).toHaveLength(1);
   });
 
   it('debería mantener metadata accesible en todas las rutas', () => {
@@ -105,5 +101,61 @@ describe('E2E - Navegación y Rutas', () => {
     // Assert
     // Debe haber al menos un H1
     expect(h1Elements.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('debería renderizar layout compartido una sola vez', () => {
+    render(<App />);
+
+    expect(screen.getAllByRole('banner')).toHaveLength(1);
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Contactar por WhatsApp' })).toBeInTheDocument();
+  });
+
+  it('debería navegar por todas las rutas existentes y actualizar metadata', async () => {
+    const user = userEvent.setup();
+    window.history.pushState({}, '', '/');
+    render(<App />);
+
+    const routes = [
+      { label: /habitaciones/i, heading: 'Habitaciones del Hotel Diva', path: '/habitaciones' },
+      { label: /galería/i, heading: 'Galería de Hotel Diva', path: '/galeria' },
+      { label: /grupos/i, heading: 'Grupos y contingentes en Hotel Diva', path: '/grupos' },
+      { label: /eventos/i, heading: 'Eventos y Campañas', path: '/eventos' },
+      { label: /contacto/i, heading: 'Contactanos', path: '/contacto' },
+    ];
+
+    for (const route of routes) {
+      const link = screen.getAllByRole('link', { name: route.label })[0];
+      await user.click(link);
+      expect(await screen.findByRole('heading', { name: route.heading })).toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1);
+        expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href'))
+          .toBe(`https://diva-hotel-mar-del-plata.netlify.app${route.path}`);
+        expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content'))
+          .toBe(`https://diva-hotel-mar-del-plata.netlify.app${route.path}`);
+        expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content'))
+          .toBe(document.title);
+      });
+    }
+
+    window.history.pushState({}, '', '/');
+  });
+
+  it('debería mostrar una página 404 y marcarla como no indexable', async () => {
+    window.history.pushState({}, '', '/ruta-inexistente');
+    const { unmount } = render(<App />);
+
+    try {
+      expect(await screen.findByRole('heading', { name: 'No encontramos esa página' }))
+        .toBeInTheDocument();
+      expect(document.querySelector('meta[name="robots"]')?.getAttribute('content'))
+        .toBe('noindex, nofollow');
+      expect(document.querySelector('link[rel="canonical"]')).toBeNull();
+    } finally {
+      unmount();
+      window.history.pushState({}, '', '/');
+    }
   });
 });

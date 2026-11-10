@@ -4,6 +4,7 @@
  */
 
 import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals';
+import type { Metric } from 'web-vitals';
 
 export interface WebVitalsMetrics {
   LCP?: number;  // Largest Contentful Paint (ms)
@@ -19,7 +20,7 @@ const metrics: WebVitalsMetrics = {};
  * Inicializar recolección de Web Vitals
  * En producción, enviar a servicio de analytics
  */
-export function initWebVitals(onMetric?: (metric: any) => void) {
+export function initWebVitals(onMetric?: (metric: Metric) => void) {
   // Largest Contentful Paint
   onLCP((metric) => {
     metrics.LCP = metric.value;
@@ -79,12 +80,17 @@ export function validateWebVitals(): {
     TTFB: 600,     // < 600ms = Good
   };
 
-  const results: Record<string, any> = {};
+  const results: Record<
+    string,
+    { value: number; threshold: number; status: 'good' | 'needsImprovement' | 'poor' }
+  > = {};
   let allPassed = true;
 
-  Object.entries(metrics).forEach(([key, value]) => {
+  const metricNames: Array<keyof WebVitalsMetrics> = ['LCP', 'INP', 'CLS', 'FCP', 'TTFB'];
+  metricNames.forEach((key) => {
+    const value = metrics[key];
     if (value !== undefined) {
-      const threshold = thresholds[key as keyof typeof thresholds];
+      const threshold = thresholds[key];
       const isPassed = value <= threshold;
       const status = isPassed ? 'good' : value <= threshold * 1.25 ? 'needsImprovement' : 'poor';
       

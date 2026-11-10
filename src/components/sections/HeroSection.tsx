@@ -12,6 +12,7 @@ function HeroSection() {
       'Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes.',
 
     ogImage: '/images/hero.webp',
+    canonical: '/',
     keywords: ['hotel mar del plata', 'alojamiento', 'hospedaje'],
   });
 
@@ -38,7 +39,7 @@ function HeroSection() {
           className="w-full h-full object-cover"
         />
         <div
-          className="absolute inset-0 bg-black/50"
+          className="absolute inset-0 bg-black/60"
           aria-hidden="true"
         />
       </div>
