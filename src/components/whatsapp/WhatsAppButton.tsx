@@ -40,8 +40,8 @@ function WhatsAppButton({
     ${className}
   `;
 
-  const floatingClasses = variant === 'floating' 
-    ? 'fixed bottom-6 right-6 animate-bounce-gentle' 
+  const floatingClasses = variant === 'floating'
+    ? 'fixed bottom-24 right-6 animate-bounce-gentle'
     : '';
 
   return (
