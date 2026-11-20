@@ -30,7 +30,7 @@ describe('EventosPage', () => {
 
     expect(screen.getByRole('heading', { name: 'COSAPRO 2027' })).toBeInTheDocument();
     const cosaproLink = screen.getByRole('link', {
-      name: 'Contactar por WhatsApp para COSAPRO 2027',
+      name: 'Quiero que me tengan en cuenta para COSAPRO 2027',
     });
     expect(cosaproLink.getAttribute('href')).toContain('https://wa.me/');
     expect(cosaproLink.getAttribute('href')).toContain('COSAPRO%202027');

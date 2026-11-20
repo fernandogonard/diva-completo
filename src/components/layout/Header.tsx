@@ -58,14 +58,19 @@ function Header() {
               }
             }}
           >
-            <img
-              src="/images/logo.webp"
-              alt="Hotel Diva - Alojamiento en Mar del Plata"
-              width={48}
-              height={48}
-              className="h-10 lg:h-12 w-auto object-contain transition-all duration-300"
-              style={showSolid ? {} : { filter: 'brightness(0) invert(1)' }}
-            />
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full p-1 transition-colors duration-300 ${
+                showSolid ? 'bg-white' : 'bg-white'
+              }`}
+            >
+              <img
+                src="/images/logo.webp"
+                alt="Hotel Diva - Alojamiento en Mar del Plata"
+                width={48}
+                height={48}
+                className="h-full w-full object-contain"
+              />
+            </span>
             <span
               className={`hidden sm:block text-2xl lg:text-3xl font-display font-bold transition-colors duration-300 ${
                 showSolid ? 'text-primary-600' : 'text-white'

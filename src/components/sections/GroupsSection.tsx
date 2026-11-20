@@ -32,7 +32,7 @@ export function GroupsSection() {
   };
 
   return (
-    <section id="groups" className="py-20 bg-gradient-to-b from-white to-primary-50">
+    <section id="groups" className="py-20 bg-brand-sky">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Encabezado */}
         <motion.div
@@ -42,10 +42,10 @@ export function GroupsSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-brand-night mb-4">
             Grupos y <span className="text-primary-600">Contingentes</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-brand-night max-w-2xl mx-auto">
             Somos especialistas en alojar y alimentar equipos deportivos, delegaciones sindicales y eventos masivos en Mar del Plata.
           </p>
         </motion.div>
@@ -65,7 +65,7 @@ export function GroupsSection() {
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
               {/* Icon Background */}
-              <div className="bg-gradient-to-br from-primary-500 to-primary-600 p-6 text-white">
+              <div className="bg-brand-diva p-6 text-white">
                 <div className="flex justify-center">
                   {iconMap[service.icon]}
                 </div>
@@ -73,17 +73,17 @@ export function GroupsSection() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">
+                <h3 className="text-xl font-bold text-brand-night mb-2 text-center">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4 text-center">
+                <p className="text-brand-night text-sm mb-4 text-center">
                   {service.description}
                 </p>
 
                 {/* Highlights */}
                 <ul className="space-y-2 mb-6">
                   {service.highlights.map((highlight, idx) => (
-                    <li key={`${service.id}-highlight-${idx}`} className="flex items-center text-gray-700 text-sm">
+                    <li key={`${service.id}-highlight-${idx}`} className="flex items-center text-brand-night text-sm">
                       <span className="w-2 h-2 bg-primary-500 rounded-full mr-2" aria-hidden="true"></span>
                       {highlight}
                     </li>
@@ -115,7 +115,7 @@ export function GroupsSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
           className="bg-white rounded-lg shadow-lg p-8 md:p-12"
         >
-          <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          <h3 className="text-3xl font-bold text-brand-night mb-8 text-center">
             ¿Por qué elegirnos?
           </h3>
 
@@ -124,10 +124,10 @@ export function GroupsSection() {
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="w-8 h-8 text-primary-600" aria-hidden="true" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-brand-night mb-2">
                 Experiencia Comprobada
               </h4>
-              <p className="text-gray-600">
+              <p className="text-brand-night">
                 Décadas de experiencia alojando contingentes de los principales eventos deportivos del país.
               </p>
             </div>
@@ -136,10 +136,10 @@ export function GroupsSection() {
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <UtensilsCrossed className="w-8 h-8 text-primary-600" aria-hidden="true" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-brand-night mb-2">
                 Cocina Propia
               </h4>
-              <p className="text-gray-600">
+              <p className="text-brand-night">
                 Preparamos desayunos y comidas personalizadas según las necesidades de cada grupo.
               </p>
             </div>
@@ -148,10 +148,10 @@ export function GroupsSection() {
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-primary-600" aria-hidden="true" />
               </div>
-              <h4 className="text-xl font-bold text-gray-900 mb-2">
+              <h4 className="text-xl font-bold text-brand-night mb-2">
                 Atención Personalizada
               </h4>
-              <p className="text-gray-600">
+              <p className="text-brand-night">
                 Coordinación directa con los responsables para garantizar la mejor experiencia.
               </p>
             </div>
@@ -166,8 +166,8 @@ export function GroupsSection() {
           transition={{ duration: prefersReducedMotion ? 0 : 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
           className="text-center mt-12"
         >
-          <p className="text-gray-600 mb-6">
-            ¿Organizas un contingente? Consulta nuestras tarifas y disponibilidad.
+          <p className="text-brand-night mb-6">
+            ¿Organizás un contingente? Consultanos por las opciones y disponibilidad.
           </p>
           <motion.a
             href={WHATSAPP_URLS.general()}

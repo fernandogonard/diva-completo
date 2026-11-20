@@ -85,7 +85,7 @@ describe('useHeadMetadata', () => {
     // Assert
     const ogImage = document.querySelector('meta[property="og:image"]')
     expect(ogImage?.getAttribute('content'))
-      .toBe('https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp')
+      .toBe('https://hotel-diva-mar-del-plata.netlify.app/images/hero.webp')
   })
 
   it('debería actualizar canonical URL', () => {
@@ -162,13 +162,13 @@ describe('useHeadMetadata', () => {
     expect(document.querySelector('meta[property="og:description"]')?.getAttribute('content'))
       .toBe(metadata.description)
     expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content'))
-      .toBe('https://diva-hotel-mar-del-plata.netlify.app/habitaciones')
+      .toBe('https://hotel-diva-mar-del-plata.netlify.app/habitaciones')
     expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content'))
       .toBe(metadata.title)
     expect(document.querySelector('meta[name="twitter:description"]')?.getAttribute('content'))
       .toBe(metadata.description)
     expect(document.querySelector('meta[name="twitter:url"]')?.getAttribute('content'))
-      .toBe('https://diva-hotel-mar-del-plata.netlify.app/habitaciones')
+      .toBe('https://hotel-diva-mar-del-plata.netlify.app/habitaciones')
     expect(document.documentElement.lang).toBe('es-AR')
     expect(document.querySelectorAll('meta[property="og:title"]')).toHaveLength(1)
   })

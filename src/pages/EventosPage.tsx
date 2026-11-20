@@ -22,8 +22,8 @@ const CAMPAIGN_CARDS = [
     location: 'Mar del Plata, Buenos Aires',
     url: VERANO_2027_CTA_URL,
     badge: 'Preventa anticipada',
-    badgeClass: 'bg-amber-100 text-amber-800',
-    borderClass: 'border-amber-400',
+    badgeClass: 'bg-brand-sun text-brand-night',
+    borderClass: 'border-brand-sun',
     highlight: true,
   },
   {
@@ -37,8 +37,8 @@ const CAMPAIGN_CARDS = [
     url: COSAPRO_2027_WHATSAPP_URL,
     emoji: '🏥',
     badge: 'Próxima edición',
-    badgeClass: 'bg-blue-100 text-blue-800',
-    borderClass: 'border-blue-400',
+    badgeClass: 'bg-brand-sky text-brand-night',
+    borderClass: 'border-brand-diva',
     highlight: false,
   },
 ];
@@ -61,7 +61,7 @@ function EventosPage() {
   });
 
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gray-50">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-brand-sky">
       {/* Hero */}
       <section className="bg-secondary-800 text-white pt-28 pb-16 px-4">
         <div className="container mx-auto max-w-4xl text-center">
@@ -69,7 +69,7 @@ function EventosPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-primary-400 font-semibold uppercase tracking-widest text-sm mb-3"
+            className="text-white font-semibold uppercase tracking-widest text-sm mb-3"
           >
             Hotel Diva · Mar del Plata
           </motion.p>
@@ -153,7 +153,7 @@ function EventosPage() {
                       ? PREVENTA_VERANO_2027_URL
                         ? 'Ver campaña Preventa Verano 2027 de Hotel Diva'
                         : 'Consultar disponibilidad y condiciones de la Preventa Verano 2027 por WhatsApp'
-                      : 'Contactar por WhatsApp para COSAPRO 2027'
+                      : 'Quiero que me tengan en cuenta para COSAPRO 2027'
                   }
                 >
                   {campaign.id === 'verano-2027'
@@ -183,7 +183,7 @@ function EventosPage() {
             href={COSAPRO_2027_WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-green-700 px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-night px-8 py-3 font-semibold text-white transition-colors duration-200 hover:bg-brand-diva focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-diva focus-visible:ring-offset-2"
             aria-label="Contactar por WhatsApp para que me tengan en cuenta para COSAPRO 2027"
           >
             Contactar por WhatsApp

@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, Bed, Wifi, Tv, Shield, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { Users, Bed, Wifi, Tv, Shield, ChevronLeft, ChevronRight, MessageCircle, Coffee } from 'lucide-react';
 import { ROOM_TYPES, WHATSAPP_URLS } from '../../constants';
 import { openWhatsApp } from '../../utils';
 import { LazyImage } from '../common';
@@ -21,7 +21,7 @@ function RoomsSection() {
     setActiveImages(prev => ({ ...prev, [roomId]: idx }));
 
   return (
-    <section id="rooms" className="py-20 bg-gray-50">
+    <section id="rooms" className="py-20 bg-brand-sky">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -36,7 +36,7 @@ function RoomsSection() {
             Nuestras Habitaciones
           </h2>
           <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
-            Espacios diseñados para tu descanso y comodidad
+            Espacios pensados para que descanses como en casa
           </p>
         </motion.div>
 
@@ -97,12 +97,17 @@ function RoomsSection() {
                               type="button"
                               key={i}
                               onClick={() => setRoomImage(room.id, i)}
-                              className={`h-2 rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
-                                i === activeIdx ? 'w-5 bg-white' : 'w-2 bg-white/55 hover:bg-white/80'
-                              }`}
+                              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                               aria-label={`Foto ${i + 1}`}
                               aria-current={i === activeIdx ? 'true' : undefined}
-                            />
+                            >
+                              <span
+                                aria-hidden="true"
+                                className={`h-2 rounded-full transition-all duration-200 ${
+                                  i === activeIdx ? 'w-5 bg-white' : 'w-2 bg-white/55 hover:bg-white/80'
+                                }`}
+                              />
+                            </button>
                           ))}
                         </div>
                       </>
@@ -161,7 +166,6 @@ function RoomsSection() {
                       type="button"
                       onClick={() => handleRoomContact(room.id)}
                       className="w-full rounded-xl bg-primary-700 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-primary-800 active:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2 flex items-center justify-center gap-2"
-                      aria-label={`Consultar disponibilidad de ${room.name} por WhatsApp`}
                     >
                       <MessageCircle className="w-5 h-5" aria-hidden="true" />
                       Consultar por WhatsApp
@@ -185,12 +189,14 @@ function RoomsSection() {
             <h3 className="text-xl font-display font-bold text-secondary-800 mb-6">
               Todas las habitaciones incluyen
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 { icon: Wifi, text: 'Wi-Fi Gratuito' },
                 { icon: Shield, text: 'Caja de Seguridad' },
                 { icon: Bed, text: 'Ropa de Cama' },
                 { icon: Users, text: 'Limpieza Diaria' },
+                { icon: Coffee, text: 'Desayuno Buffet Incluido' },
+                { icon: Tv, text: 'TV Plasma y TV por Cable' },
               ].map((service, i) => (
                 <div key={i} className="text-center">
                   <service.icon className="w-8 h-8 text-primary-500 mx-auto mb-2" aria-hidden="true" />

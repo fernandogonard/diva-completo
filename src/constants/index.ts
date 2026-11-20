@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://diva-hotel-mar-del-plata.netlify.app';
+export const SITE_URL = 'https://hotel-diva-mar-del-plata.netlify.app';
 export const PREVENTA_VERANO_2027_URL = '';
 
 // Información del Hotel
@@ -6,6 +6,8 @@ export const HOTEL_INFO = {
   name: 'Hotel Diva',
   phone: '+54 9 223 503-3585',
   whatsappNumber: '5492235033585', // Formato para WhatsApp API
+  phoneSecondary: '+54 223 520-3369',
+  whatsappNumberSecondary: '5492235203369',
   email: 'matias@hoteldiva.com.ar',
   address: 'Calle Garay 1630, Mar del Plata, Buenos Aires',
   website: SITE_URL,

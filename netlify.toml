@@ -3,9 +3,42 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "20.20.2"
+
+[[redirects]]
+  from = "/habitaciones"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/galeria"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/grupos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/eventos"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contacto"
+  to = "/index.html"
+  status = 200
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-hashes' 'sha256-oZvu8+XMCuSRVkvKP/PIHMnW/lmmOQHGlLgONBYCQwY=' 'sha256-HkT8sYBR83NRKfXCq+/pibBSv4Cax/mlPZm/xHvdnCg=' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

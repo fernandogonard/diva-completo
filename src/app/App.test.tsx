@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '@/App';
 
@@ -111,6 +111,27 @@ describe('App - navegación y rutas', () => {
     expect(screen.getByRole('button', { name: 'Contactar por WhatsApp' })).toBeInTheDocument();
   });
 
+  it('debería mostrar ambos teléfonos confirmados en la página de contacto', async () => {
+    window.history.pushState({}, '', '/contacto');
+    render(<App />);
+
+    const main = await screen.findByRole('main');
+    const links = await within(main).findAllByRole('link', { name: /^\+54/ });
+
+    expect(
+      links.filter((link) => link.getAttribute('href')?.startsWith('https://wa.me/'))
+        .map((link) => link.getAttribute('href'))
+        .sort(),
+    ).toEqual(['https://wa.me/5492235033585', 'https://wa.me/5492235203369']);
+    expect(
+      links.filter((link) => link.getAttribute('href')?.startsWith('tel:'))
+        .map((link) => link.getAttribute('href'))
+        .sort(),
+    ).toEqual(['tel:+542235203369', 'tel:+5492235033585']);
+
+    window.history.pushState({}, '', '/');
+  });
+
   it('debería navegar por todas las rutas existentes y actualizar metadata', async () => {
     const user = userEvent.setup();
     window.history.pushState({}, '', '/');
@@ -132,9 +153,9 @@ describe('App - navegación y rutas', () => {
       await waitFor(() => {
         expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1);
         expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href'))
-          .toBe(`https://diva-hotel-mar-del-plata.netlify.app${route.path}`);
+          .toBe(`https://hotel-diva-mar-del-plata.netlify.app${route.path}`);
         expect(document.querySelector('meta[property="og:url"]')?.getAttribute('content'))
-          .toBe(`https://diva-hotel-mar-del-plata.netlify.app${route.path}`);
+          .toBe(`https://hotel-diva-mar-del-plata.netlify.app${route.path}`);
         expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content'))
           .toBe(document.title);
       });

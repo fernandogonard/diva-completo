@@ -7,9 +7,9 @@ function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
 
   useHeadMetadata({
-    title: 'Hotel Diva - Alojamiento Premium en Mar del Plata',
+    title: 'Hotel Diva | Mar del Plata',
     description:
-      'Descubre la perfecta combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes.',
+      'Conocé la combinación de amabilidad y comodidad en Hotel Diva, Mar del Plata. A pasos de la Vieja Terminal, en el barrio Güemes.',
 
     ogImage: '/images/hero.webp',
     canonical: '/',
@@ -22,7 +22,7 @@ function HeroSection() {
   return (
     <section
       id="home"
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image (LCP) */}
       <div className="absolute inset-0 z-0">
@@ -39,13 +39,13 @@ function HeroSection() {
           className="w-full h-full object-cover"
         />
         <div
-          className="absolute inset-0 bg-black/60"
+          className="absolute inset-0 bg-brand-night/55"
           aria-hidden="true"
         />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,14 +54,15 @@ function HeroSection() {
         >
           {/* Logo solo en móvil, con margen para no solapar el header */}
           <div className="flex justify-center mb-4 mt-14 sm:mt-0 sm:hidden">
-            <img
-              src="/images/logo.webp"
-              alt="Hotel Diva"
-              className="h-32 w-auto object-contain"
-              width={128}
-              height={128}
-              style={{ filter: 'brightness(0) invert(1)' }}
-            />
+            <div className="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-white p-3">
+              <img
+                src="/images/logo.webp"
+                alt="Hotel Diva"
+                className="h-full w-full object-contain"
+                width={150}
+                height={150}
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-center mb-4 px-2">
@@ -72,7 +73,7 @@ function HeroSection() {
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4">
             Hotel{' '}
-            <span className="bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent">
+            <span className="text-brand-sun">
               Diva
             </span>
           </h1>
@@ -89,7 +90,7 @@ function HeroSection() {
           transition={{ duration, delay }}
           className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto leading-relaxed"
         >
-          Descubre la perfecta combinación de amabilidad y comodidad, a pasos de la Vieja Terminal, en el barrio Güemes
+          Conocé la combinación de amabilidad y comodidad, a pasos de la Vieja Terminal, en el barrio Güemes
         </motion.p>
 
         <motion.div
@@ -98,7 +99,7 @@ function HeroSection() {
           transition={{ duration, delay: delay * 2 }}
           className="flex items-center justify-center gap-2 mb-12 text-lg text-white/90"
         >
-          <MapPin className="w-5 h-5 text-yellow-300" aria-hidden="true" />
+          <MapPin className="w-5 h-5 text-brand-sun" aria-hidden="true" />
           <span>Mar del Plata, Buenos Aires</span>
         </motion.div>
 

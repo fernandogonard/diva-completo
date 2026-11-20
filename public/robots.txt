@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://diva-hotel-mar-del-plata.netlify.app/sitemap.xml
+Sitemap: https://hotel-diva-mar-del-plata.netlify.app/sitemap.xml
