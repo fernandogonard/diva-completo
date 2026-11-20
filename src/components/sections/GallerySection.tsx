@@ -90,10 +90,10 @@ function GallerySection() {
           className="text-center mb-16"
         >
           <h2 id="gallery-heading" className="text-4xl md:text-5xl font-display font-bold text-secondary-800 mb-6">
-            Conoce Nuestras Instalaciones
+            Conocé nuestras instalaciones
           </h2>
           <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
-            Explora cada rincón de Hotel Diva y descubre la elegancia y confort que ofrecemos
+            Explorá cada rincón de Hotel Diva y conocé la comodidad que ofrecemos
           </p>
         </motion.div>
 

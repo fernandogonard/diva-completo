@@ -23,11 +23,11 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-display font-bold mb-4 text-primary-400">
+            <h2 className="text-2xl font-display font-bold mb-4">
               Hotel Diva
             </h2>
             <p className="text-secondary-200 mb-4">
-              Tu hogar lejos de casa en Mar del Plata. Comodidad, elegancia y atención personalizada.
+              Tu hogar en Mar del Plata. Te recibimos con cercanía y atención personalizada.
             </p>
           </motion.div>
 
@@ -122,7 +122,7 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
+            <h3 className="text-lg font-semibold mb-4">Seguinos</h3>
             <div className="flex gap-4">
               <motion.a
                 href="https://www.instagram.com/hoteldivamdp/"

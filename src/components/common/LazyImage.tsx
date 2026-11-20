@@ -40,7 +40,7 @@ export function LazyImage({
 
   return (
     <motion.div
-      className={`relative overflow-hidden bg-gray-100 ${className}`}
+      className={`relative overflow-hidden bg-brand-sky ${className}`}
       initial={priority ? false : { opacity: 0 }}
       animate={priority ? undefined : { opacity: 1 }}
       transition={priority ? undefined : { duration: 0.3 }}
@@ -48,7 +48,7 @@ export function LazyImage({
       {/* Skeleton */}
       {!isLoaded && !error && (
         <div
-          className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-pulse"
+          className="absolute inset-0 bg-brand-sky animate-pulse"
           aria-hidden="true"
         />
       )}
@@ -73,11 +73,11 @@ export function LazyImage({
       ) : (
         /* Error fallback */
         <div
-          className="w-full h-full flex items-center justify-center bg-gray-100"
+          className="w-full h-full flex items-center justify-center bg-brand-sky"
           role="img"
           aria-label={alt ? `${alt} (imagen no disponible)` : 'Imagen no disponible'}
         >
-          <span className="text-sm text-gray-600">Imagen no disponible</span>
+          <span className="text-sm text-brand-night">Imagen no disponible</span>
         </div>
       )}
     </motion.div>

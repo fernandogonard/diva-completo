@@ -14,9 +14,9 @@ describe('performSEOAudit', () => {
       <title>Hotel Diva</title>
       <meta name="description" content="Hotel en Mar del Plata">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="canonical" href="https://diva-hotel-mar-del-plata.netlify.app/">
+      <link rel="canonical" href="https://hotel-diva-mar-del-plata.netlify.app/">
       <meta property="og:title" content="Hotel Diva">
-      <meta property="og:image" content="https://diva-hotel-mar-del-plata.netlify.app/images/hero.webp">
+      <meta property="og:image" content="https://hotel-diva-mar-del-plata.netlify.app/images/hero.webp">
       <script type="application/ld+json">{}</script>
     `;
     document.body.innerHTML = '<h1>Hotel Diva</h1><img alt="Fachada del hotel">';

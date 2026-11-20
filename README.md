@@ -44,10 +44,10 @@ El sitio presenta habitaciones, servicios para grupos, eventos y datos de contac
 
 | Categoría | Tecnologías |
 |-----------|------------|
-| **Core** | React 19, TypeScript 5.9.3, Vite 7.2.4, React Router 7.10 |
+| **Core** | React 19.2, TypeScript 5.9.3, Vite 7.3.8, React Router 7.18.6 |
 | **Styling** | Tailwind CSS 3.4, Framer Motion 12.23 |
 | **Icons** | Lucide React |
-| **Testing** | Vitest 4.0.15, React Testing Library, jsdom |
+| **Testing** | Vitest 4.1.12, Playwright 1.65.1, React Testing Library, jsdom |
 | **Performance** | web-vitals 5.1.0 |
 | **SEO** | Schema.org JSON-LD |
 
@@ -81,10 +81,23 @@ npm run preview      # Vista previa del build
 npm test             # Tests en modo watch
 npm run test:ui      # Interfaz visual de tests
 npm run test:coverage # Cobertura de tests
+npm run test:e2e     # E2E con Playwright sobre Netlify Dev
 npm run lint         # Validar código
 ```
 
 ---
+
+## Pruebas E2E
+
+Con Node 20 y las dependencias instaladas, generá el build, instalá Chromium para Playwright y ejecutá la suite:
+
+```bash
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+La suite levanta Netlify Dev en modo local y valida rutas, status HTTP 404, metadata, recursos, headers, navegación y responsive. El sitio no tiene formularios de huéspedes ni persistencia de reservas; las consultas se derivan a WhatsApp.
 
 ## Verificación local
 
@@ -147,4 +160,4 @@ src/
 
 ---
 
-**Dominio canónico configurado:** `https://diva-hotel-mar-del-plata.netlify.app`. Confirmar el dominio de producción antes de cambiarlo en metadatos, sitemap y robots.
+**Dominio canónico:** `https://hotel-diva-mar-del-plata.netlify.app/`.

@@ -33,7 +33,7 @@ const ReservationCTA: React.FC<ReservationCTAProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className={`bg-gradient-to-r from-primary-700 to-primary-800 rounded-2xl p-8 text-white text-center ${className}`}
+      className={`bg-brand-night rounded-2xl p-8 text-white text-center ${className}`}
     >
       <motion.h3 
         className="text-2xl md:text-3xl font-display mb-4"

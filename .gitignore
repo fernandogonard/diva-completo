@@ -33,3 +33,8 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify and Playwright artifacts
+.netlify/
+playwright-report/
+test-results/

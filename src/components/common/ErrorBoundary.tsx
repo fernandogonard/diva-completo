@@ -37,20 +37,20 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const isDev = import.meta.env.DEV;
       
       return (
-        <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-brand-sky p-4">
           <div role="alert" className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
-            <h1 className="text-2xl font-bold text-red-600 mb-2">
+            <h1 className="text-2xl font-bold text-brand-night mb-2">
               ¡Algo salió mal!
             </h1>
-            <p className="text-gray-600 mb-4">
-              Lo sentimos, ocurrió un error inesperado. Por favor, intenta recargar la página.
+            <p className="text-brand-night mb-4">
+              Ocurrió un error inesperado. Recargá la página y seguimos ayudándote.
             </p>
             {isDev && (
-              <details className="mb-4 p-3 bg-gray-100 rounded text-sm">
-                <summary className="cursor-pointer font-mono text-red-600">
+              <details className="mb-4 p-3 bg-brand-sky rounded text-sm">
+                <summary className="cursor-pointer font-mono text-brand-night">
                   Detalles del error (desarrollo)
                 </summary>
-                <pre className="mt-2 text-xs overflow-auto max-h-40 text-red-700">
+                <pre className="mt-2 text-xs overflow-auto max-h-40 text-brand-night">
                   {this.state.error?.toString()}
                 </pre>
               </details>
