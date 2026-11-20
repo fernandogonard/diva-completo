@@ -1,23 +1,25 @@
 # Auditoria pre-deploy final — Hotel Diva
 
-**Fecha:** 19/11/2026
-**Decision:** **NO-GO / PENDIENTE DE VALIDACION**
-**Alcance:** cambios del sitio, build, dependencias, rutas con Netlify Dev, pruebas y vista local. Se autorizó commit/push de una rama y PR exclusivamente para Deploy Preview. No se hizo merge ni deploy de producción, migración ni cambio remoto de producción.
+**Fecha:** 20/11/2026
+**Decision:** **PREVIEW GO / PRODUCCIÓN NO PUBLICADA**
+**Alcance:** cambios del sitio, build, dependencias, rutas, pruebas, vista local y Deploy Preview hospedado. Se creó el [PR #1](https://github.com/fernandogonard/diva-completo/pull/1); no se hizo merge ni deploy de producción.
 
 ## 1. Resumen ejecutivo
 
 Se corrigieron las referencias SEO al dominio canonico confirmado, se preparo una respuesta HTTP 404 para rutas desconocidas, se agregaron pruebas E2E con Playwright y se validaron las dependencias con Node 20.20.2. La inspeccion visual local tambien detecto que el contenido del hero se recortaba en ventanas de poca altura; el hero ahora puede crecer y reserva espacio debajo del encabezado.
 
-Lint, 48 pruebas unitarias, build, 16 pruebas E2E y las auditorias de dependencias pasan. `npm audit` y `npm audit --omit=dev` reportan cero vulnerabilidades. Una revision de seguridad estatica independiente no encontro vulnerabilidades explotables en los cambios revisados.
+Tras `npm ci` limpio con Node 20.20.2, lint, 48 pruebas unitarias, build, 16 pruebas E2E y las auditorías de dependencias pasan. `npm audit` y `npm audit --omit=dev` reportan cero vulnerabilidades. Una revisión de seguridad estática independiente no encontró vulnerabilidades explotables en los cambios revisados.
 
-No recomiendo publicar a producción todavia: falta la validacion de un Deploy Preview hospedado y confirmar el procedimiento de rollback en Netlify. El usuario aprobó mantener el logo del encabezado a 48 px como excepción al mínimo de 150 px del manual y aceptó el LCP movil local de 2,9 a 3,6 s. Los datos comerciales fueron confirmados verbalmente y aplicados. No se modificó HTML ni estilos del logo. La revision visual de las seis rutas y la comprobacion dirigida de teclado se completaron localmente. La rama/PR de preview está autorizada; no debe fusionarse a producción sin autorización.
+El Deploy Preview `https://deploy-preview-1--hotel-diva-mar-del-plata.netlify.app` (deploy `6b004f935c4354c600b15fa6`) pasó las comprobaciones hospedadas: seis rutas HTTP 200, ruta desconocida HTTP 404, HTTPS, HSTS, CSP, headers de seguridad y recursos. El punto estable de producción conocido es `master@92840af` (10/11/2026); no se ejecutó el rollback real porque cambiaría producción ni se verificaron los permisos del dashboard autenticado. No se hizo merge ni deploy de producción.
+
+El usuario aprobó mantener el logo del encabezado a 48 px como excepción al manual y aceptó el LCP móvil local. Los datos comerciales fueron confirmados verbalmente y aplicados. No se modificó HTML ni estilos del logo. Cualquier merge/publicación requiere autorización expresa del usuario.
 
 ## 2. Estado y trazabilidad
 
-- **Rama:** `master`; HEAD observado: `92840af` (`Add AI discovery resources`).
-- El arbol tiene cambios locales y archivos sin seguimiento, incluidos cambios previos de identidad visual. Se preservaron; no se descartaron ni se confirmaron.
+- **Rama de preview:** `preview/fase-final-hotel-diva`; commit `75edb35`; PR #1 abierto contra `master`.
+- El PDF del manual y `.vscode/` quedaron fuera del commit y sin modificar.
 - No se observaron archivos eliminados en el diff.
-- No se ejecuto ningun comando de publicacion ni se modifico produccion.
+- El Deploy Preview se publicó a través de la integración GitHub–Netlify; producción no se modificó.
 - El manual oficial `Hotel-Diva-Manual-de-marca.pdf` permanecio intacto. SHA-256 verificado: `814D658AFEC62B77541D7091E20CB227C8F6366E49C2B18040A218A404897D35`.
 - Se limpiaron artefactos generados por Netlify Dev y Playwright (`.netlify/`, `deno.lock` y `test-results/`).
 
@@ -26,11 +28,11 @@ No recomiendo publicar a producción todavia: falta la validacion de un Deploy P
 | ID | Nivel | Archivo / componente | Evidencia e impacto | Correccion / estado |
 |---|---|---|---|---|
 | H-01 | Alto original, resuelto localmente | `package.json`, `package-lock.json` | La linea base informaba vulnerabilidades criticas y altas en dependencias. | Se actualizaron dependencias de forma controlada. `npm audit` y `npm audit --omit=dev`: cero vulnerabilidades. |
-| H-02 | Alto original, resuelto localmente | `netlify.toml`, `scripts/create-netlify-404.mjs`, rutas | El fallback SPA devolvia 200 para rutas inexistentes. | Netlify sirve las rutas validas y `404.html` con status 404 para rutas desconocidas. Playwright y el proxy Netlify local lo verifican. Falta validacion en Deploy Preview hospedado. |
+| H-02 | Alto original, resuelto | `netlify.toml`, `scripts/create-netlify-404.mjs`, rutas | El fallback SPA devolvia 200 para rutas inexistentes. | El Deploy Preview confirmó seis rutas válidas con HTTP 200 y una ruta inexistente con HTTP 404 real. |
 | H-03 | Alto original, resuelto | `index.html`, `src/constants/index.ts`, `public/robots.txt`, `public/sitemap.xml`, `public/llms.txt`, `public/ai-catalog.json` | Habia referencias al dominio canonico anterior. | Las verificaciones E2E comprueban metadata, Schema.org, sitemap, robots, catalogo y recursos con el dominio confirmado. La busqueda final no encontro referencias activas al dominio retirado. |
-| H-04 | Medio, resuelto con confirmacion verbal | `src/components/whatsapp/ReservationCTA.tsx`, `src/pages/ContactPage.tsx`, `src/components/sections/RoomsSection.tsx` | El hotel confirmó recepción, WhatsApp 24/7, desayuno, dos teléfonos, disponibilidad inmediata y servicios publicados. | Se añadieron ambos teléfonos, desayuno buffet, TV plasma, TV por cable y los servicios confirmados. Aun falta una confirmación documental formal antes de publicar. |
-| H-05 | Medio, pendiente operativo | Netlify / procedimiento de rollback | El último deploy estable conocido fue el publicado el 10/11/2026 desde `master@92840af` como “Production: master@92840af”. | Conservar este identificador como rollback conocido; confirmar permisos y ejecutar restauración únicamente desde Netlify cuando el usuario autorice. |
-| H-06 | Medio, resuelto por excepción | Todas las paginas; Header; Galeria | Se completaron inspeccion visual de las seis rutas en 1440, 768 y 390 px, Lighthouse y prueba dirigida de teclado. El logo del header se mantiene a 48 px. El usuario aprobó esta medida como excepción al mínimo de 150 px del manual. Un hallazgo inicial de contraste en Galeria no se reprodujo al repetir Axe con movimiento reducido y pagina estabilizada. | No modificar HTML ni estilos del logo. Repetir el contraste en Deploy Preview. La evidencia ampliada esta en `AUDITORIA-EXPERIENCIA-SEO-ACCESIBILIDAD.md`. |
+| H-04 | Resuelto según confirmación del usuario | `src/components/whatsapp/ReservationCTA.tsx`, `src/pages/ContactPage.tsx`, `src/components/sections/RoomsSection.tsx` | El usuario confirmó recepción, WhatsApp 24/7, desayuno, ambos teléfonos, disponibilidad inmediata y servicios publicados. | Se añadieron ambos teléfonos, desayuno buffet, TV plasma, TV por cable y los servicios confirmados. |
+| H-05 | Medio, parcialmente confirmado | Netlify / procedimiento de rollback | El usuario identificó el deploy estable del 10/11/2026 como `master@92840af`. | El punto de rollback está identificado. No se ejecutó la restauración para evitar modificar producción; falta comprobar en sesión autenticada de Netlify el botón y los permisos. |
+| H-06 | Medio, resuelto por excepción | Todas las paginas; Header; Galeria | Inspección visual local en seis rutas y tres tamaños; logo a 48 px aprobado por el usuario como excepción. El hallazgo transitorio de contraste no se reprodujo al repetir Axe estabilizado. | No modificar HTML ni estilos del logo. La ruta de Galería hospedada respondió y renderizó correctamente. |
 | H-07 | Bajo, higiene de dependencias | `node_modules` / `sharp` | `npm ls --depth=0` termina con codigo 0, pero informa `@emnapi/runtime` y `@img/sharp-wasm32` como extraneous; son paquetes WASM opcionales de Sharp y no se usan en la prueba nativa de Windows. | No aparecieron vulnerabilidades asociadas. Revalidar una instalacion limpia cuando pueda ejecutarse sin un proceso local bloqueando Rollup. |
 
 ## 4. Arquitectura, seguridad y funcionalidad
@@ -39,7 +41,7 @@ No recomiendo publicar a producción todavia: falta la validacion de un Deploy P
 - Las consultas y reservas abren WhatsApp; no se probaron operaciones de PMS porque no existen en esta aplicacion.
 - La revision de seguridad estatica de los cambios no encontro vulnerabilidades explotables. Esto no equivale a una prueba de penetracion.
 - Auditoria de dependencias: cero avisos en el total y en dependencias de produccion.
-- Se verificaron headers locales: CSP, `X-Content-Type-Options`, `Referrer-Policy` y `Permissions-Policy`. El `Cache-Control` local revalida los recursos. HTTPS/HSTS y headers del deploy productivo no se volvieron a validar en esta fase.
+- En el Deploy Preview se verificaron HTTPS, CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` y `Cache-Control`. Producción no se modificó.
 - No hay formularios de huespedes: el E2E comprueba que Contacto derive a WhatsApp y que no se exponga un formulario inexistente.
 
 ## 5. Dominio, SEO, rutas y recursos
@@ -50,7 +52,8 @@ No recomiendo publicar a producción todavia: falta la validacion de un Deploy P
 - Sitemap: seis URLs de rutas registradas; robots y catalogo apuntan al dominio confirmado.
 - E2E comprobo respuestas 200 para rutas validas y assets referenciados (favicon, logos e imagenes).
 - En Netlify Dev local: `/` = 200, `/habitaciones` = 200, `/habitaciones/` = 200 con canonical sin barra, y una ruta inexistente = 404. No se agrego una redireccion de barra final porque Netlify normaliza esas rutas y la regla probada provocaba un bucle.
-- El build genera `dist/404.html`. La respuesta 404 en el servicio hospedado sigue pendiente de Deploy Preview.
+- El build genera `dist/404.html`; el Deploy Preview devolvió 404 real para una ruta desconocida.
+- Preview: `https://deploy-preview-1--hotel-diva-mar-del-plata.netlify.app`; Netlify deploy `6b004f935c4354c600b15fa6`; commit `75edb35340c75a3a274216da9025619c34e3855c`.
 
 ## 6. Validaciones ejecutadas
 
@@ -59,6 +62,7 @@ Todas las validaciones de codigo se ejecutaron con **Node v20.20.2 real**.
 | Control | Comando / evidencia | Resultado |
 |---|---|---|
 | Runtime | `node --version`; `.nvmrc`; `netlify.toml` | PASS — Node 20.20.2 |
+| Instalación limpia | Node 20.20.2 + `npm ci --no-audit --no-fund` | PASS — 392 paquetes |
 | Lint | `npm run lint` | PASS |
 | Unit tests | `npm run test -- --run` | PASS — 11 archivos, 48 pruebas |
 | Build | `npm run build` | PASS — TypeScript y Vite; se genero `dist/404.html` |
@@ -71,10 +75,14 @@ Todas las validaciones de codigo se ejecutaron con **Node v20.20.2 real**.
 | Headers | Escenario E2E en Netlify Dev | PASS en entorno local |
 | Responsive | E2E en 1440, 768 y 390 px; navegacion movil | PASS — sin overflow horizontal |
 | Hero en ventana baja | E2E a 946 × 466; inspeccion visual local | PASS — contenido visible y sin solaparse con el header |
-| Preview hospedado | No disponible sin publicar | PENDIENTE |
-| Rollback real | Deploy estable/ID no confirmado | PENDIENTE |
+| Deploy Preview hospedado | PR #1 / deploy `6b004f935c4354c600b15fa6` | PASS |
+| HTTP rutas y 404 | Fetch directo al preview | PASS — seis rutas 200; inexistente 404 |
+| HTTPS y headers | Fetch directo al preview | PASS — HSTS, CSP, nosniff, Referrer, Permissions |
+| Assets | Bundles e imágenes | PASS — HTTP 200 |
+| Punto de rollback | Información de Netlify compartida por el usuario | IDENTIFICADO — `master@92840af` |
+| Acción/permisos de rollback | Requiere dashboard autenticado | NO EJECUTADO; producción intacta |
 
-`npm ci` se intento, pero Windows rechazo el borrado de un binario de Rollup bloqueado por un servidor Vite que ya estaba en ejecucion (`EPERM`). Se restauraron dependencias con `npm install --no-audit --no-fund`; lint, tests, build, E2E y auditorias pasaron despues de esa restauracion. Por lo tanto, no se declara validada una instalacion limpia con `npm ci`.
+En el primer intento, `npm ci` encontró un proceso Vite que mantenía bloqueado un binario de Rollup (`EPERM`). Con los procesos cerrados, `npm ci --no-audit --no-fund` se ejecutó correctamente bajo Node 20.20.2; luego pasaron lint, 48 pruebas, build, E2E y auditorías.
 
 ### Fase 3: experiencia, SEO, accesibilidad y rendimiento
 
@@ -111,10 +119,9 @@ Se preservaron tambien `.vscode/settings.json` y `Hotel-Diva-Manual-de-marca.pdf
 
 ## 9. Decision final
 
-**NO-GO / PENDIENTE DE VALIDACION.** Los controles locales de codigo, build, dependencias, E2E, SEO, rutas y headers pasaron. Antes de autorizar publicacion quedan:
+**Deploy Preview: PASS. Producción: no publicada.** Para verificar visualmente los permisos de rollback:
 
-1. Confirmar y ensayar el rollback desde el deploy estable conocido `master@92840af`.
-2. Obtener un Deploy Preview hospedado y repetir ahi las pruebas HTTP 404, rutas, headers y assets.
-3. Repetir `npm ci` y las validaciones en una sesion donde no haya un proceso local bloqueando archivos de dependencias.
+1. Verificar en una sesión autenticada de Netlify el control y los permisos de restauración del deploy `master@92840af`. No se ejecutó rollback para preservar producción.
+2. No ejecutar “Publish deploy” ni restaurar producción sin autorización expresa.
 
 No se hizo merge ni deploy de producción. El commit/push de la rama y el PR de preview fueron autorizados explícitamente; la publicación en producción sigue requiriendo autorización del usuario.

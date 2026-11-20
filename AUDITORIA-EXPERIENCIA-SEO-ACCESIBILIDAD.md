@@ -1,6 +1,6 @@
 # Auditoría de experiencia, SEO, accesibilidad y rendimiento — Hotel Diva
 
-**Alcance:** fase 3 de validación local. Se autorizó una rama y PR para generar un Deploy Preview; no se hizo merge ni deploy de producción. Las pruebas no enviaron mensajes ni consultas reales.
+**Alcance:** validación local y Deploy Preview hospedado. Se creó el [PR #1](https://github.com/fernandogonard/diva-completo/pull/1) para preview; no se hizo merge ni deploy de producción. Las pruebas no enviaron mensajes ni consultas reales.
 
 ## Resumen ejecutivo
 
@@ -8,7 +8,9 @@ Se revisaron las seis rutas públicas en escritorio, tablet y móvil. Se corrigi
 
 Las comprobaciones de lint, 48 pruebas unitarias, build, 16 pruebas E2E y las auditorías de dependencias finalizaron correctamente. Lighthouse otorgó 100 en Accesibilidad, Best Practices y SEO para las siete mediciones; en móvil, Performance quedó entre 89 y 93. El LCP de laboratorio móvil fue de 2,9 a 3,6 s y quedó aceptado por el hotel. Son mediciones locales simuladas, no métricas de usuarios reales ni una evaluación del deploy hospedado.
 
-**Decisión: NO-GO / PENDIENTE DE VALIDACIÓN.** La medida del logo quedó cerrada mediante excepción aprobada sin modificar HTML ni estilos. Los datos comerciales fueron confirmados verbalmente y el LCP móvil fue aceptado. Continúa pendiente validar HTTPS, headers, rutas y rollback en un Deploy Preview/Netlify real.
+**Resultado:** Deploy Preview validado en [https://deploy-preview-1--hotel-diva-mar-del-plata.netlify.app](https://deploy-preview-1--hotel-diva-mar-del-plata.netlify.app). Las seis rutas respondieron HTTP 200 y una ruta inexistente respondió 404. HTTPS y los headers probados pasaron. El destino de rollback es `master@92840af`; no se ejecutó una reversión en producción.
+
+**Producción:** no se hizo merge ni deploy. La publicación continúa esperando autorización expresa del usuario.
 
 ## 1. Inspección visual y responsive
 
@@ -39,7 +41,7 @@ El usuario aprobó mantener el logo institucional del encabezado en su medida ac
 
 ### Límites
 
-Estos resultados no equivalen a una certificación WCAG 2.2 AA. La medición de Lighthouse/Axe no sustituye pruebas completas con lector de pantalla, sistemas operativos y navegadores distintos, ni la verificación de contraste en todas las condiciones reales. La detección intermitente de Galería debe volver a comprobarse en un Deploy Preview.
+Estos resultados no equivalen a una certificación WCAG 2.2 AA. La medición de Lighthouse/Axe no sustituye pruebas completas con lector de pantalla, sistemas operativos y navegadores distintos, ni la verificación de contraste en todas las condiciones reales. La detección intermitente de Galería no se reprodujo al repetir el escaneo local estabilizado; la ruta hospedada cargó correctamente.
 
 ## 3. Lighthouse y rendimiento
 
@@ -91,7 +93,7 @@ Los siguientes datos fueron confirmados por el usuario y aplicados al sitio. Con
 | `src/pages/ContactPage.tsx` | WhatsApp disponible 24/7; recepción de lunes a domingo 8:00–22:00; consultas urgentes 24/7 |
 | `src/pages/ContactPage.tsx` | Teléfono de lunes a viernes 9:00–18:00; respuesta al email en 24 horas |
 | `src/pages/ContactPage.tsx` | Horarios de desayuno: lunes a viernes 7:00–10:30 y fines de semana 8:00–11:00 |
-| `src/pages/ContactPage.tsx` | Teléfonos: +54 9 223 503-3585 y +54 9 223 520-3369; email y dirección Calle Garay 1630 |
+| `src/pages/ContactPage.tsx` | Teléfonos: +54 9 223 503-3585 y +54 223 520-3369; email y dirección Calle Garay 1630 |
 | `src/components/sections/RoomsSection.tsx` y `src/pages/RoomsPage.tsx` | Wi-Fi gratuito, caja de seguridad, ropa de cama, limpieza diaria, desayuno buffet, TV plasma y TV por cable |
 | `src/components/sections/GroupsSection.tsx` | Experiencia con contingentes, cocina propia, desayunos y comidas personalizadas y atención/coordinación de grupos |
 | `src/pages/EventosPage.tsx` | Preventa Verano 2027: “Pagás 6 noches, te alojás 7”, confirmada por el hotel |
@@ -99,11 +101,19 @@ Los siguientes datos fueron confirmados por el usuario y aplicados al sitio. Con
 
 ## 7. Netlify, producción y rollback
 
-El proxy local de Netlify verificó rutas válidas con HTTP 200 y una ruta inexistente con HTTP 404 en la fase pre-deploy. También se probaron localmente headers de seguridad y navegación.
+Deploy Preview del [PR #1](https://github.com/fernandogonard/diva-completo/pull/1):
 
-Queda pendiente en Deploy Preview hospedado: HTTP 404 de origen, rutas directas válidas, HTTPS/HSTS, CSP y demás headers efectivos, redirects, caché/CDN, carga de recursos y configuración real de publicación. No se modificó ninguna configuración remota.
+- URL: `https://deploy-preview-1--hotel-diva-mar-del-plata.netlify.app`
+- Deploy Netlify: `6b004f935c4354c600b15fa6`
+- Commit: `75edb35340c75a3a274216da9025619c34e3855c`
+- Las seis rutas públicas abrieron directamente con HTTP 200, título, H1 y canonical correctos.
+- Una ruta inexistente devolvió HTTP 404 real.
+- Se verificaron HTTPS, CSP, HSTS (`max-age=31536000; includeSubDomains; preload`), `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy` y `Cache-Control`.
+- Bundles e imágenes verificadas respondieron HTTP 200.
+- Contacto mostró ambos teléfonos para enlaces WhatsApp y llamada. No se enviaron comunicaciones.
+- La consola reportó un iframe de `app.netlify.com` bloqueado por la CSP; el sitio y sus rutas renderizaron correctamente. No se debilitó la política.
 
-El ID del último deploy estable y el procedimiento real de rollback no están confirmados. Antes de publicar, el responsable de Netlify debe confirmar ambos y documentar cómo restaurar esa versión. No se hizo rollback.
+El usuario identificó como versión estable publicada el 10/11/2026 a `master@92840af`. Ése es el punto de rollback conocido. La acción no se ejecutó porque cambiaría producción. El dashboard de Netlify requería autenticación para comprobar visualmente el botón de restauración y sus permisos.
 
 ## 8. Validaciones ejecutadas
 
@@ -118,7 +128,11 @@ El ID del último deploy estable y el procedimiento real de rollback no están c
 | Node | PASS en la validación previa con Node 20.20.2 real |
 | Lighthouse | PASS en 7 informes; métricas detalladas arriba |
 | Teclado y foco del diálogo | PASS en prueba local dirigida |
-| HTTPS, headers y rutas del Deploy Preview | PENDIENTE — no se publicó un preview |
+| Deploy Preview hospedado | PASS — PR #1, deploy `6b004f935c4354c600b15fa6` |
+| Rutas y HTTP 404 hospedados | PASS — seis rutas 200; inexistente 404 |
+| HTTPS, headers y assets hospedados | PASS — HSTS, CSP, headers de seguridad y recursos 200 |
+| Punto de rollback | IDENTIFICADO — producción `master@92840af` |
+| Ensayo de rollback real | NO EJECUTADO — modificaría producción |
 
 Los informes JSON de Lighthouse y las capturas visuales se guardaron en el directorio de sesión, no como recursos del sitio. No se añadieron dependencias para estas comprobaciones.
 
@@ -145,9 +159,9 @@ Los informes solicitados son `AUDITORIA-EXPERIENCIA-SEO-ACCESIBILIDAD.md` y la a
 | Rendimiento móvil | ACEPTADO por el hotel: LCP local 2,9–3,6 s |
 | SEO y dominio canónico | PASS local |
 | CTA y navegación | PASS sin enviar comunicaciones |
-| Datos comerciales | PASS para horarios, teléfonos, servicios y campañas confirmados; pendiente obtener una confirmación documental formal |
-| HTTP 404 y headers en Netlify alojado | PENDIENTE de Deploy Preview |
-| Rollback real | PENDIENTE de confirmar deploy estable e ID |
+| Datos comerciales | PASS según confirmación del usuario |
+| HTTP 404 y headers en Netlify alojado | PASS en Deploy Preview |
+| Punto de rollback | IDENTIFICADO: `master@92840af`; acción no ejecutada |
 | Rama y PR de preview | AUTORIZADOS; sin merge ni deploy de producción |
 
-**Decisión final: NO-GO / PENDIENTE DE VALIDACIÓN.** La publicación debe esperar a verificar los controles que solo puede acreditar un Deploy Preview alojado y completar el procedimiento real de rollback. El logo, los datos comerciales y el LCP móvil quedaron definidos.
+**Resultado final:** controles del Deploy Preview **PASS**. La versión estable `master@92840af` quedó identificada como rollback. No se hizo merge ni deploy de producción; cualquier publicación requiere autorización expresa del usuario.
